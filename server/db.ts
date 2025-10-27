@@ -1,11 +1,24 @@
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { 
+  InsertUser, 
+  users,
+  conversations,
+  messages,
+  permissions,
+  actions,
+  professionProfiles,
+  InsertConversation,
+  InsertMessage,
+  InsertPermission,
+  InsertAction,
+  Conversation,
+  Message
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -35,7 +48,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     };
     const updateSet: Record<string, unknown> = {};
 
-    const textFields = ["name", "email", "loginMethod"] as const;
+    const textFields = ["name", "email", "loginMethod", "profession"] as const;
     type TextField = (typeof textFields)[number];
 
     const assignNullable = (field: TextField) => {
@@ -58,6 +71,14 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     } else if (user.openId === ENV.ownerOpenId) {
       values.role = 'admin';
       updateSet.role = 'admin';
+    }
+    if (user.subscriptionTier !== undefined) {
+      values.subscriptionTier = user.subscriptionTier;
+      updateSet.subscriptionTier = user.subscriptionTier;
+    }
+    if (user.professionDetected !== undefined) {
+      values.professionDetected = user.professionDetected;
+      updateSet.professionDetected = user.professionDetected;
     }
 
     if (!values.lastSignedIn) {
@@ -89,4 +110,137 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// ============ Conversations ============
+
+export async function createConversation(data: InsertConversation): Promise<Conversation> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(conversations).values(data);
+  const id = Number(result[0].insertId);
+  
+  const created = await db.select().from(conversations).where(eq(conversations.id, id)).limit(1);
+  return created[0];
+}
+
+export async function getUserConversations(userId: number): Promise<Conversation[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(conversations)
+    .where(eq(conversations.userId, userId))
+    .orderBy(desc(conversations.updatedAt));
+}
+
+export async function getConversationById(id: number): Promise<Conversation | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(conversations).where(eq(conversations.id, id)).limit(1);
+  return result[0];
+}
+
+export async function updateConversation(id: number, data: Partial<InsertConversation>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(conversations).set(data).where(eq(conversations.id, id));
+}
+
+// ============ Messages ============
+
+export async function createMessage(data: InsertMessage): Promise<Message> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(messages).values(data);
+  const id = Number(result[0].insertId);
+  
+  const created = await db.select().from(messages).where(eq(messages.id, id)).limit(1);
+  return created[0];
+}
+
+export async function getConversationMessages(conversationId: number): Promise<Message[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(messages)
+    .where(eq(messages.conversationId, conversationId))
+    .orderBy(messages.createdAt);
+}
+
+// ============ Permissions ============
+
+export async function getUserPermissions(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(permissions).where(eq(permissions.userId, userId));
+}
+
+export async function upsertPermission(data: InsertPermission) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.insert(permissions).values(data).onDuplicateKeyUpdate({
+    set: {
+      enabled: data.enabled,
+      scope: data.scope,
+    },
+  });
+}
+
+// ============ Actions ============
+
+export async function createAction(data: InsertAction) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(actions).values(data);
+  return Number(result[0].insertId);
+}
+
+export async function getUserActions(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(actions)
+    .where(eq(actions.userId, userId))
+    .orderBy(desc(actions.createdAt));
+}
+
+export async function updateAction(id: number, data: Partial<InsertAction>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(actions).set(data).where(eq(actions.id, id));
+}
+
+// ============ Profession Profiles ============
+
+export async function getProfessionProfile(name: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(professionProfiles)
+    .where(eq(professionProfiles.name, name))
+    .limit(1);
+  
+  return result[0];
+}
+
+export async function getAllProfessionProfiles() {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(professionProfiles);
+}
+
