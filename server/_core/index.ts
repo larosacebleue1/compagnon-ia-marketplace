@@ -10,6 +10,7 @@ import { serveStatic, setupVite } from "./vite";
 import { initializeBackupSystem } from "../backup";
 import { initializeMonitoring, monitoringMiddleware } from "../monitoring";
 import { initializeSecurity } from "../security";
+import betaRoutes from "../routes/beta";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -49,6 +50,8 @@ async function startServer() {
   app.use(monitoringMiddleware);
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  // Beta testers management routes
+  app.use("/api/beta", betaRoutes);
   // tRPC API
   app.use(
     "/api/trpc",

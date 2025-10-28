@@ -239,3 +239,123 @@ export const auditLogs = mysqlTable("audit_logs", {
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
 
+
+/**
+ * Beta invitations table - stores beta tester invitations
+ */
+export const betaInvitations = mysqlTable("beta_invitations", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  inviteCode: varchar("invite_code", { length: 32 }).notNull().unique(),
+  invitedBy: varchar("invited_by", { length: 255 }),
+  
+  // Status and tier
+  status: mysqlEnum("status", ["pending", "accepted", "revoked"]).default("pending").notNull(),
+  tier: mysqlEnum("tier", ["alpha", "beta", "early_access"]).default("beta").notNull(),
+  
+  // Metadata
+  source: varchar("source", { length: 50 }), // 'manual', 'waitlist', 'referral'
+  notes: text("notes"),
+  
+  // Special permissions
+  canInviteOthers: boolean("can_invite_others").default(false).notNull(),
+  maxInvites: int("max_invites").default(0).notNull(),
+  invitesUsed: int("invites_used").default(0).notNull(),
+  
+  // Engagement tracking
+  firstLoginAt: timestamp("first_login_at"),
+  lastActiveAt: timestamp("last_active_at"),
+  sessionsCount: int("sessions_count").default(0).notNull(),
+  feedbackSubmitted: boolean("feedback_submitted").default(false).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  acceptedAt: timestamp("accepted_at"),
+  expiresAt: timestamp("expires_at"),
+});
+
+export type BetaInvitation = typeof betaInvitations.$inferSelect;
+export type InsertBetaInvitation = typeof betaInvitations.$inferInsert;
+
+/**
+ * User permissions table - stores granular permissions for users (including beta testers)
+ */
+export const userPermissions = mysqlTable("user_permissions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  permissionKey: varchar("permission_key", { length: 100 }).notNull(), // 'beta_tester', 'alpha_tester', 'feature_invoices', etc.
+  grantedAt: timestamp("granted_at").defaultNow().notNull(),
+  grantedBy: varchar("granted_by", { length: 255 }),
+  expiresAt: timestamp("expires_at"),
+});
+
+export type UserPermission = typeof userPermissions.$inferSelect;
+export type InsertUserPermission = typeof userPermissions.$inferInsert;
+
+/**
+ * Beta feedback table - stores feedback from beta testers
+ */
+export const betaFeedback = mysqlTable("beta_feedback", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  type: mysqlEnum("type", ["bug", "suggestion", "praise", "question"]).notNull(),
+  message: text("message").notNull(),
+  screenshot: text("screenshot"), // URL to screenshot if provided
+  
+  // Context capture
+  url: varchar("url", { length: 500 }),
+  userAgent: text("user_agent"),
+  viewport: varchar("viewport", { length: 50 }), // e.g., "1920x1080"
+  sessionId: varchar("session_id", { length: 100 }),
+  
+  // Status
+  status: mysqlEnum("status", ["new", "in_progress", "resolved", "closed"]).default("new").notNull(),
+  resolvedAt: timestamp("resolved_at"),
+  resolvedBy: varchar("resolved_by", { length: 255 }),
+  
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type BetaFeedback = typeof betaFeedback.$inferSelect;
+export type InsertBetaFeedback = typeof betaFeedback.$inferInsert;
+
+/**
+ * Beta activity table - tracks beta tester activity for analytics
+ */
+export const betaActivity = mysqlTable("beta_activity", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  activityType: varchar("activity_type", { length: 100 }).notNull(), // 'login', 'feature_use', 'bug_report', etc.
+  details: text("details"), // JSON with additional context
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
+export type BetaActivity = typeof betaActivity.$inferSelect;
+export type InsertBetaActivity = typeof betaActivity.$inferInsert;
+
+/**
+ * Beta rewards table - stores points and rewards for beta testers
+ */
+export const betaRewards = mysqlTable("beta_rewards", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  
+  // Points system
+  totalPoints: int("total_points").default(0).notNull(),
+  
+  // Badges earned (JSON array)
+  badges: text("badges"), // ['bronze', 'silver', 'gold', 'platinum']
+  
+  // Rewards claimed (JSON array)
+  rewardsClaimed: text("rewards_claimed"),
+  
+  // Referrals
+  referralCount: int("referral_count").default(0).notNull(),
+  activeReferrals: int("active_referrals").default(0).notNull(),
+  
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BetaReward = typeof betaRewards.$inferSelect;
+export type InsertBetaReward = typeof betaRewards.$inferInsert;
+

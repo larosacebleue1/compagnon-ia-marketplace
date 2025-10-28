@@ -86,6 +86,59 @@
 - [ ] **Guide déploiement** (procédures - à rédiger)
 - [ ] **Runbook incidents** (que faire si problème - à rédiger)
 
+### 1.6 Système de Gestion des Testeurs Beta
+**Objectif :** Permettre invitations, suivi et gestion des testeurs Alpha/Beta
+
+**Base de données :**
+- [x] **Table beta_invitations** (invitations, codes, statuts, expirations)
+- [x] **Table user_permissions** (permissions granulaires par utilisateur)
+- [x] **Table beta_feedback** (bugs, suggestions, témoignages)
+- [x] **Table beta_activity** (tracking sessions, actions, engagement)
+- [x] **Table beta_rewards** (points, badges, récompenses)
+
+**API Backend :**
+- [x] **POST /api/beta/invite** (créer invitation)
+- [x] **GET /api/beta/invitations** (liste invitations)
+- [x] **POST /api/beta/accept/:code** (accepter invitation)
+- [x] **DELETE /api/beta/revoke/:id** (révoquer accès)
+- [x] **POST /api/beta/feedback** (soumettre feedback)
+- [x] **GET /api/beta/analytics** (métriques testeurs)
+- [x] **Middleware requireBetaAccess** (vérification permissions)
+
+**Interface Admin :**
+- [ ] **Page Admin Testeurs** (/admin/beta-testers)
+- [ ] **Formulaire invitation** (email, tier, permissions, expiration)
+- [ ] **Liste testeurs** (filtres, recherche, statuts)
+- [ ] **Détails testeur** (activité, feedback, statistiques)
+- [ ] **Dashboard analytics** (métriques globales, graphiques)
+- [ ] **Gestion permissions** (activer/désactiver features par testeur)
+
+**Emails automatiques :**
+- [ ] **Template invitation Beta** (avec code unique)
+- [ ] **Email de bienvenue** (après inscription)
+- [ ] **Rappel invitation** (si non acceptée après 3 jours)
+- [ ] **Email récompense** (badge/points débloqués)
+- [ ] **Demande feedback** (questionnaire mensuel)
+
+**Système de points et récompenses :**
+- [ ] **Calcul points automatique** (signup, sessions, feedback, bugs)
+- [ ] **Badges** (Bronze, Silver, Gold, Platinum)
+- [ ] **Tableau de bord testeur** (profil, points, récompenses)
+- [ ] **Système de parrainage** (codes d'invitation personnels)
+
+**Sécurité et tracking :**
+- [x] **Génération codes sécurisés** (BETA-XXXX-XXXX-XXXX)
+- [x] **Expiration automatique** (invitations et accès)
+- [x] **Logs d'activité** (toutes actions testeurs)
+- [ ] **Rate limiting** (anti-abus invitations - à implémenter)
+- [x] **Anonymisation données** (RGPD compliant)
+
+**Tests :**
+- [ ] **Tests unitaires** (API invitations)
+- [ ] **Tests d'intégration** (workflow complet invitation → acceptation)
+- [ ] **Tests permissions** (vérification accès features)
+- [ ] **Tests emails** (envoi et templates)
+
 ---
 
 ## 💼 PHASE 2 : MODULE BUSINESS PRO - Fonctionnalités Core (Semaine 3-12)
