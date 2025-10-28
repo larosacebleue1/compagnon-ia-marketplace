@@ -103,7 +103,7 @@ export default function Home() {
           </div>
           <h1 className="text-3xl font-bold text-gray-900">{APP_TITLE}</h1>
           <p className="text-gray-600">
-            Votre compagnon IA personnel qui s'adapte à vous et vous accompagne dans toutes vos tâches.
+            UNIALIST - Votre assistant universel qui vous éclaire et vous élève.
           </p>
           <Button
             onClick={() => window.location.href = getLoginUrl()}

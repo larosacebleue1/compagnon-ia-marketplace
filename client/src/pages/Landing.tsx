@@ -58,15 +58,16 @@ export default function Landing() {
           </div>
           
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl">
-            Votre compagnon IA{" "}
             <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-              qui apprend de vous
+              UNIALIST
             </span>
+            <br />
+            Votre assistant universel
           </h1>
           
           <p className="mb-8 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
-            Une intelligence artificielle qui comprend votre métier, s'adapte à vos besoins,
-            et vous propose des solutions que vous n'auriez pas imaginées.
+            L'IA qui vous éclaire et vous élève. Assistance universelle qui comprend votre métier,
+            apprend de vous, et vous propose des solutions meilleures que ce que vous imaginez.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
