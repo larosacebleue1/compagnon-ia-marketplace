@@ -99,7 +99,7 @@ export default function Home() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <Card className="max-w-md w-full p-8 text-center space-y-6">
           <div className="flex justify-center">
-            {APP_LOGO && <img src={APP_LOGO} alt={APP_TITLE} className="h-16 w-16" />}
+            <img src="/logo.png" alt={APP_TITLE} className="h-20 w-20" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">{APP_TITLE}</h1>
           <p className="text-gray-600">
