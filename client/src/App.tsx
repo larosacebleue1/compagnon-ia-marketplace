@@ -6,6 +6,9 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
+import Permissions from "./pages/Permissions";
+import PermissionDetail from "./pages/PermissionDetail";
+import ActivityLog from "./pages/ActivityLog";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -13,6 +16,9 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Landing} />
       <Route path={"/app"} component={Home} />
+      <Route path={"/permissions"} component={Permissions} />
+      <Route path={"/permissions/activity"} component={ActivityLog} />
+      <Route path={"/permissions/:category"} component={PermissionDetail} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

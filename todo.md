@@ -322,6 +322,16 @@
 - [ ] Log de toutes les actions
 - [ ] Révocation instantanée
 
+### Interface de gestion des permissions (✅ COMPLÉTÉ)
+- [x] Page vue d'ensemble des permissions (toggles par catégorie)
+- [x] Page configuration détaillée (3 niveaux: jamais/suggérer/automatique)
+- [x] Page journal d'activité (timeline avec filtres)
+- [x] Composants interactifs (toggles, sliders, radio buttons)
+- [x] Navigation entre les écrans
+- [x] Bouton accès permissions depuis l'interface principale
+- [ ] Sauvegarde des préférences en temps réel (backend)
+- [ ] Validation et feedback utilisateur (backend)
+
 ---
 
 ## 📱 Phase 10 : Multi-plateformes (Semaine 9-12)

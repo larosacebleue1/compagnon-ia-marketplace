@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Send, Plus, LogOut, User } from "lucide-react";
+import { Loader2, Send, Plus, LogOut, User, Settings } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -121,8 +121,15 @@ export default function Home() {
     <div className="min-h-screen flex bg-gray-50">
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-gray-200 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">{APP_TITLE}</h2>
+          <button
+            onClick={() => window.location.href = '/permissions'}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            title="Paramètres des permissions"
+          >
+            <Settings className="w-5 h-5 text-gray-600" />
+          </button>
         </div>
 
         <div className="p-4">
