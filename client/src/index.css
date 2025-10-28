@@ -43,39 +43,40 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  /* Palette personnalisée : Bleu (confiance) + Jaune (énergie) + Vert pastel (croissance) */
+  --primary: 210 100% 45%; /* Bleu principal */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 150 35% 75%; /* Vert pastel */
+  --secondary-foreground: 150 35% 20%;
+  --accent: 48 100% 65%; /* Jaune accent */
+  --accent-foreground: 48 100% 15%;
+  --sidebar-primary: 210 100% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --chart-1: 210 100% 60%;
+  --chart-2: 48 100% 60%;
+  --chart-3: 150 35% 60%;
+  --chart-4: 210 80% 40%;
+  --chart-5: 150 40% 50%;
+  --radius: 0.75rem;
+  --background: 0 0% 100%;
+  --foreground: 210 15% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 15% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 210 15% 20%;
+  --muted: 210 20% 96%;
+  --muted-foreground: 210 10% 45%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 20% 90%;
+  --input: 210 20% 90%;
+  --ring: 210 100% 50%;
+  --sidebar: 210 25% 98%;
+  --sidebar-foreground: 210 15% 20%;
+  --sidebar-accent: 150 35% 92%;
+  --sidebar-accent-foreground: 150 35% 20%;
+  --sidebar-border: 210 20% 90%;
+  --sidebar-ring: 210 100% 50%;
 }
 
 .dark {

@@ -11,6 +11,12 @@ import { toast } from "sonner";
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
+
+  // Rediriger vers la landing page si non authentifié
+  if (!loading && !isAuthenticated) {
+    window.location.href = "/";
+    return null;
+  }
   const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
