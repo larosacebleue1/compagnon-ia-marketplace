@@ -1,15 +1,17 @@
-# 📋 TODO - UNIALIST
+# 📋 TODO - UNIALIST - Plan de développement professionnel
 
 ## 🎯 Vision
 **UNIALIST** - Votre assistance universelle qui incarne : **Indépendance, Confiance, Sécurité, Justesse, Apprentissage, Enrichissement, Bonification**
 
 **Positionnement unique :** "L'IA qui vous éclaire et vous élève - pas qui vous robotise"
 
-**Slogan :** "Votre assistant universel"
+**Cible prioritaire :** **Chefs d'entreprise & Encadrement** (Module "Business Pro")
+
+**Principe de développement :** **ZÉRO compromis sur la qualité - Chaque fonctionnalité doit être PARFAITE**
 
 ---
 
-## 🎨 Identité visuelle FINALISÉE ✅
+## 🎨 Identité visuelle ✅ FINALISÉE
 
 ### Nom et branding
 - **Nom :** UNIALIST ✅
@@ -21,392 +23,426 @@
 - **Jaune** (#fbbf24) : Énergie, optimisme, lumière
 - **Vert pastel** (#86efac) : Croissance, sérénité, nature
 
-### Logo ✅
+### Logo
 - **Design :** Visage de profil avec cerveau visible, sourcil jaune, rayons de lumière
 - **Symbolique :** Intelligence transparente + Vision éclairée + Être éclairé
-- **Fichier :** /client/public/logo.png
-- **Favicon :** /client/public/favicon.png
+- **Fichiers :** logo.png, favicon.png ✅
 
 ---
 
-## ✅ Phase 1 : Base conversationnelle (COMPLÉTÉ)
+## 💰 Modèle économique
 
-### Infrastructure
-- [x] Initialisation du projet web
-- [x] Configuration de l'API IA (OpenAI/Grok)
-- [x] Système d'authentification
-- [x] Base de données (schéma initial)
+### Tarification
+- **Essai gratuit :** 14 jours (accès complet, sans CB)
+- **Abonnement mensuel :** 29.99€/mois (Business Pro)
+- **Blocage automatique** en cas de non-paiement
+- **Réactivation instantanée** après paiement
 
-### Fonctionnalités
-- [x] Interface de chat moderne
-- [x] Conversation avec l'IA
-- [x] Mémoire des conversations
-- [x] Profil utilisateur de base
-- [x] Palette de couleurs personnalisée (Bleu + Jaune + Vert pastel)
-- [x] Logo finalisé et intégré
+### Formules
+- **Starter** (9.99€/mois) : Fonctionnalités de base
+- **Business Pro** (29.99€/mois) : Toutes fonctionnalités + support prioritaire ⭐
+- **Enterprise** (sur mesure) : Solutions personnalisées
 
 ---
 
-## 🎨 Phase 2 : Rebranding UNIALIST + Page d'accueil (EN COURS)
+## 🏗️ PHASE 1 : FONDATIONS SOLIDES (Semaine 1-2) - EN COURS
 
-### Rebranding
-- [ ] Renommer "Compagnon IA" → "UNIALIST" partout
-- [ ] Mettre à jour tous les textes avec le nouveau nom
-- [ ] Adapter le slogan et les messages
-- [ ] Mettre à jour les métadonnées (title, description)
+### Objectif : Infrastructure béton, fiabilité 99.9%, zéro perte de données
 
-### Page d'accueil qui convertit
-- [ ] Hero section avec accroche forte
-  - "UNIALIST - Votre assistant universel"
-  - Sous-titre percutant
-  - CTA principal "Essayer gratuitement"
-- [ ] Section "Comment ça marche" (3 étapes simples)
-- [ ] Section preuve sociale (témoignages)
-- [ ] Démonstration par métier (onglets interactifs)
-- [ ] Tableau comparatif (UNIALIST vs autres)
-- [ ] Fonctionnalités concrètes par métier
-- [ ] Section sécurité et RGPD
-- [ ] Tarification claire (9.99€ / 29.99€ / Enterprise)
-- [ ] CTA essai gratuit 14 jours (sans CB)
-- [ ] Footer complet
+### 1.1 Infrastructure technique
+- [x] Projet web initialisé
+- [x] Base de données PostgreSQL
+- [x] Authentification utilisateur
+- [x] **Système de backups automatiques** (toutes les heures)
+- [x] **Transactions ACID** (garantie intégrité données)
+- [ ] **Réplication base de données** (failover automatique - nécessite infrastructure cloud)
+- [ ] **Tests de charge** (support 10,000 utilisateurs simultanés)
 
-### Onboarding magique
-- [ ] Conversation d'accueil personnalisée
-- [ ] Détection automatique du métier
-- [ ] Configuration guidée (tarifs, préférences, fournisseurs)
-- [ ] Premier cas d'usage réussi (quick win)
-- [ ] Tour guidé des fonctionnalités
+### 1.2 Sécurité maximale
+- [x] Authentification OAuth
+- [x] **Chiffrement bout en bout** (données au repos + transit)
+- [x] **Logs d'audit complets** (toutes actions tracées)
+- [x] **Conformité RGPD** (consentement, export, suppression)
+- [ ] **Authentification multi-facteurs** (2FA - à implémenter côté frontend)
+- [ ] **Audit sécurité** (scan vulnérabilités - à faire avant production)
 
----
+### 1.3 Monitoring et alertes
+- [x] **Système de monitoring** (uptime, performance, erreurs)
+- [x] **Alertes automatiques** (email/SMS si problème)
+- [x] **Détection anomalies** (comportements suspects)
+- [ ] **Dashboard admin** (métriques temps réel - interface à créer)
+- [ ] **Rollback automatique** (si erreur critique détectée - à implémenter)
 
-## 🧠 Phase 3 : Système d'apprentissage intelligent (Semaine 2-3)
+### 1.4 Tests automatisés
+- [ ] **Framework de tests** (Jest + Playwright)
+- [ ] **Tests unitaires** (chaque fonction testée)
+- [ ] **Tests d'intégration** (scénarios complets)
+- [ ] **Tests de charge** (performance sous stress)
+- [ ] **CI/CD** (déploiement automatique si tests OK)
 
-### Architecture base de données
-- [ ] Table user_knowledge (connaissances apprises)
-- [ ] Table user_preferences (préférences utilisateur)
-- [ ] Table user_patterns (patterns détectés)
-- [ ] Table suggestions (suggestions faites)
-- [ ] Relations et indexes optimisés
-
-### Apprentissage progressif
-- [ ] Système de niveaux : Apprenti → Compagnon → Expert → Maître
-- [ ] Extraction automatique d'informations des conversations
-- [ ] Analyse des patterns de comportement
-- [ ] Mémorisation contextuelle
-- [ ] Base de connaissances personnalisée par utilisateur
-
-### Suggestions proactives
-- [ ] Moteur d'analyse comparative
-- [ ] Détection d'opportunités d'optimisation
-- [ ] Système de notifications intelligentes
-- [ ] Propositions d'alternatives meilleures
-- [ ] Scoring de pertinence des suggestions
-
-### Dashboard d'apprentissage
-- [ ] Visualisation "Ce que l'IA a appris"
-- [ ] Interface de validation/correction
-- [ ] Statistiques de progression
-- [ ] Historique des suggestions acceptées/refusées
-- [ ] Graphiques d'évolution
+### 1.5 Documentation technique
+- [x] **Architecture système** documentée (dans le code)
+- [ ] **API documentation** (endpoints, paramètres - à générer)
+- [ ] **Guide déploiement** (procédures - à rédiger)
+- [ ] **Runbook incidents** (que faire si problème - à rédiger)
 
 ---
 
-## 🔧 Phase 4 : Modules métiers spécialisés (Semaine 3-4)
+## 💼 PHASE 2 : MODULE BUSINESS PRO - Fonctionnalités Core (Semaine 3-12)
 
-### Module Mécanicien (prioritaire)
-- [ ] Vocabulaire technique automobile
-- [ ] Base de données véhicules/pannes courantes
-- [ ] Diagnostic assisté par IA
-- [ ] Génération de factures automatique
-- [ ] Templates de factures personnalisables
-- [ ] Commande de pièces automatique
-- [ ] Catalogue pièces intégré
-- [ ] Intégration fournisseurs (Autodis, etc.)
-- [ ] Estimation temps/coût interventions
-- [ ] Historique client véhicules
-
-### Module Entrepreneur
-- [ ] Business plan automatique
-- [ ] Gestion emails clients
-- [ ] Génération devis/factures
-- [ ] Comptabilité simplifiée
-- [ ] Suivi trésorerie
-- [ ] Suggestions business
-- [ ] Analyse de marché
-- [ ] Prévisions financières
-
-### Module Développeur
-- [ ] Code review automatique
-- [ ] Debug assisté
-- [ ] Génération documentation
-- [ ] Suggestions d'optimisation
-- [ ] Intégration GitHub/GitLab
-- [ ] Tests automatiques
-- [ ] Refactoring suggestions
-
-### Module Marketeur
-- [ ] Rédaction contenus
-- [ ] Analyse campagnes
-- [ ] Suggestions SEO
-- [ ] Calendrier éditorial
-- [ ] A/B testing
-- [ ] Analytics interprétation
-
-### Module Artisan
-- [ ] Gestion chantiers
-- [ ] Devis automatiques
-- [ ] Suivi matériaux
-- [ ] Planning optimisé
-- [ ] Gestion sous-traitants
+### Principe : UNE fonctionnalité à la fois, développée à 100%, testée intensivement, validée en conditions réelles
 
 ---
 
-## 🚀 Phase 5 : Fonctionnalités WOW (Semaine 5-6)
+### 🔒 PRIORITÉ 1 : Fiabilité données (VITAL)
 
-### Voice (Vocal)
-- [ ] Intégration reconnaissance vocale (Whisper)
-- [ ] Synthèse vocale naturelle
-- [ ] Commandes vocales
-- [ ] Conversation mains-libres
-- [ ] Transcription automatique
+#### Fonctionnalité 1 : Sauvegarde automatique conversations
+**Objectif :** ZÉRO perte de données, jamais
 
-### Vision (Caméra)
-- [ ] Upload et analyse d'images
-- [ ] Diagnostic visuel (ex: photo moteur)
-- [ ] OCR pour documents
-- [ ] Reconnaissance de pièces/produits
-- [ ] Extraction de données visuelles
+- [ ] **Sauvegarde temps réel** (<100ms par message)
+- [ ] **Queue de messages** (si connexion perdue)
+- [ ] **Synchronisation multi-appareils** (temps réel)
+- [ ] **Versioning** (historique modifications)
+- [ ] **Export données** (backup utilisateur)
 
-### Predict (Prédictif)
-- [ ] Analyse des patterns utilisateur
-- [ ] Prédictions de tendances
-- [ ] Suggestions d'optimisation proactive
-- [ ] Alertes préventives
-- [ ] Anticipation des besoins
-
-### Network (Communauté)
-- [ ] Réseau entre utilisateurs même métier
-- [ ] Partage d'astuces et bonnes pratiques
-- [ ] Entraide entre professionnels
-- [ ] Marketplace de services
-- [ ] Système de réputation
+**Tests requis :**
+- [ ] Test perte connexion (message sauvegardé quand même)
+- [ ] Test crash serveur (données récupérables)
+- [ ] Test fermeture app (rien perdu)
+- [ ] Test charge (1000 messages/seconde)
+- [ ] **Résultat attendu : 99.999% fiabilité**
 
 ---
 
-## 🎯 Phase 6 : Viralité et rétention (Semaine 4-5)
+### 💰 PRIORITÉ 2 : Fonctionnalités business essentielles
 
-### Tableau de bord de gains
-- [ ] Temps économisé cette semaine
-- [ ] Argent gagné/économisé
-- [ ] Tâches automatisées
-- [ ] Comparaison période précédente
-- [ ] Bouton "Partager mes résultats"
+#### Fonctionnalité 2 : Génération factures professionnelles
+**Objectif :** Factures parfaites, conformes légalement, ZÉRO erreur
 
-### Moments "WOW" notifiés
-- [ ] Notifications de gains importants
-- [ ] Célébration des milestones
-- [ ] Partage facile sur réseaux sociaux
-- [ ] Screenshots automatiques des résultats
+**Spécifications :**
+- [ ] **Tous champs obligatoires** (SIRET, TVA, adresses, etc.)
+- [ ] **Calculs exacts** (montants HT/TTC, TVA, remises)
+- [ ] **Numérotation séquentielle** (jamais de doublon)
+- [ ] **Format PDF conforme** (lisible, imprimable, archivable)
+- [ ] **Mentions légales** (selon statut juridique)
+- [ ] **Multi-devises** (EUR, USD, etc.)
+- [ ] **Templates personnalisables** (logo, couleurs, mise en page)
 
-### Comparaison avant/après
-- [ ] Métriques avant UNIALIST
-- [ ] Métriques avec UNIALIST
-- [ ] Gains chiffrés
-- [ ] Visualisations impactantes
+**Fonctionnalités avancées :**
+- [ ] **Génération automatique** (depuis conversation IA)
+- [ ] **Devis → Facture** (conversion en 1 clic)
+- [ ] **Factures récurrentes** (abonnements)
+- [ ] **Acomptes et avoirs** (gestion complète)
+- [ ] **Export comptable** (FEC, CSV pour logiciels compta)
+- [ ] **Archivage légal** (10 ans, conforme)
 
-### Parrainage gagnant-gagnant
-- [ ] Système d'invitation
-- [ ] Récompenses pour parrain et filleul
-- [ ] Tracking des parrainages
-- [ ] Gamification du parrainage
-
-### Gamification
-- [ ] Badges de progression
-- [ ] Système de niveaux visuels
-- [ ] Challenges hebdomadaires
-- [ ] Récompenses virtuelles
-- [ ] Déblocage de fonctionnalités
+**Tests requis :**
+- [ ] Test 1000 factures (toutes conformes)
+- [ ] Validation expert-comptable
+- [ ] Test cas limites (montants négatifs, remises 100%, etc.)
+- [ ] Test export comptable (import dans logiciels)
+- [ ] **Résultat attendu : 100% conformité légale**
 
 ---
 
-## 💰 Phase 7 : Monétisation (Semaine 4)
+#### Fonctionnalité 3 : Rappels obligations fiscales et sociales
+**Objectif :** JAMAIS manquer une échéance
 
-### Système d'abonnement
-- [ ] Intégration Stripe
-- [ ] Plan Basic (9.99€/mois)
-- [ ] Plan Premium (29.99€/mois)
-- [ ] Plan Enterprise (sur mesure)
-- [ ] Essai gratuit 14 jours
-- [ ] Gestion des abonnements
-- [ ] Facturation automatique
+**Base de données obligations :**
+- [ ] **Calendrier fiscal** (TVA, IS, CFE, etc.)
+- [ ] **Calendrier social** (URSSAF, retraite, prévoyance)
+- [ ] **Obligations sectorielles** (selon activité)
+- [ ] **Mise à jour automatique** (changements législatifs)
 
-### Freemium intelligent
-- [ ] Version gratuite limitée (50 messages/mois)
-- [ ] Système de quotas
-- [ ] Upselling contextuel
-- [ ] Messages de conversion
+**Système de rappels :**
+- [ ] **Rappels multiples** (J-7, J-3, J-1, Jour J)
+- [ ] **Multi-canal** (app, email, SMS, notification push)
+- [ ] **Personnalisation** (horaires préférés)
+- [ ] **Accusé réception** (confirmation lecture)
+- [ ] **Escalade** (relance si pas de réponse)
 
-### Analytics business
-- [ ] Tracking conversions
-- [ ] Analyse churn
-- [ ] Métriques d'engagement (NPS, rétention, etc.)
-- [ ] ROI par utilisateur
-- [ ] Dashboard KPIs
+**Fonctionnalités avancées :**
+- [ ] **Préparation documents** (listes à fournir)
+- [ ] **Calculs automatiques** (montants à déclarer)
+- [ ] **Pré-remplissage formulaires** (si possible)
+- [ ] **Historique déclarations** (archivage)
 
----
-
-## 🎬 Phase 8 : Marketing et contenu (Semaine 5 + continu)
-
-### Vidéos virales (TikTok, Instagram Reels, YouTube Shorts)
-- [ ] "J'ai laissé UNIALIST gérer mon garage pendant 1 semaine"
-- [ ] "Cette IA a doublé mon chiffre d'affaires"
-- [ ] "Je lui ai montré UNE facture, regardez ce qu'elle fait"
-- [ ] "Qui est le plus rapide ? Moi ou UNIALIST ?"
-- [ ] "UNIALIST a trouvé une solution que je n'aurais JAMAIS imaginée"
-- [ ] "J'ai montré UNIALIST à mon collègue mécanicien"
-- [ ] "Mon patron découvre UNIALIST"
-- [ ] "3 erreurs que font tous les mécaniciens"
-- [ ] "Combien j'ai gagné avec UNIALIST ce mois-ci"
-- [ ] "Pourquoi les mécaniciens sans IA vont disparaître"
-
-### Vidéos longues (YouTube, LinkedIn)
-- [ ] Démo complète (10 min)
-- [ ] "Comment UNIALIST a transformé mon garage en 30 jours"
-- [ ] "UNIALIST vs ChatGPT vs autres : Le test ultime"
-- [ ] Tutoriels par fonctionnalité (5-10 vidéos)
-
-### Témoignages clients
-- [ ] 5 vidéos témoignages authentiques
-- [ ] Études de cas détaillées
-- [ ] Avant/Après chiffrés
-
-### SEO et blog
-- [ ] 20 articles de blog optimisés SEO
-- [ ] Guides par métier
-- [ ] Tutoriels écrits
-- [ ] FAQ complète
-
-### Réseaux sociaux
-- [ ] Création comptes (LinkedIn, Twitter, Instagram, TikTok)
-- [ ] 30 posts prêts à publier
-- [ ] Calendrier éditorial 3 mois
-- [ ] Stratégie d'engagement
-
-### Partenariats
-- [ ] Chambres des métiers
-- [ ] Fournisseurs (Autodis, etc.)
-- [ ] Influenceurs métiers
-- [ ] Écoles professionnelles
+**Tests requis :**
+- [ ] Simulation 1 an complet (aucune échéance manquée)
+- [ ] Test changement législatif (détection et intégration)
+- [ ] Test utilisateur absent (rappels envoyés quand même)
+- [ ] **Résultat attendu : 0 oubli**
 
 ---
 
-## 🔐 Phase 9 : Sécurité et conformité (Semaine 4)
+#### Fonctionnalité 4 : Relances clients automatiques (recouvrement)
+**Objectif :** Récupérer l'argent dû, professionnellement
 
-### Sécurité
-- [ ] Chiffrement E2E des données sensibles
-- [ ] Audit de sécurité
-- [ ] Protection contre injections SQL
-- [ ] Rate limiting
-- [ ] Logs de sécurité
+**Détection automatique :**
+- [ ] **Scan factures impayées** (quotidien)
+- [ ] **Calcul retards** (jours de retard)
+- [ ] **Priorisation** (montants, ancienneté)
+- [ ] **Historique paiements** (bons/mauvais payeurs)
 
-### RGPD
-- [ ] Politique de confidentialité
-- [ ] CGU/CGV
-- [ ] Consentement cookies
-- [ ] Droit à l'oubli
-- [ ] Export données utilisateur
+**Relances progressives :**
+- [ ] **Relance 1** (J+7) : Cordiale, rappel amical
+- [ ] **Relance 2** (J+15) : Ferme, demande paiement
+- [ ] **Relance 3** (J+30) : Formelle, mise en demeure
+- [ ] **Relance 4** (J+45) : Juridique, menace procédure
 
-### Système de permissions
-- [ ] Gestion granulaire des permissions
-- [ ] Suspension en 1 clic
-- [ ] Log de toutes les actions
-- [ ] Révocation instantanée
+**Personnalisation :**
+- [ ] **Templates emails** (ton adapté)
+- [ ] **Règles par client** (délais spécifiques)
+- [ ] **Stop automatique** (si paiement reçu)
+- [ ] **Lettres recommandées** (génération PDF)
 
-### Interface de gestion des permissions (✅ COMPLÉTÉ)
-- [x] Page vue d'ensemble des permissions (toggles par catégorie)
-- [x] Page configuration détaillée (3 niveaux: jamais/suggérer/automatique)
-- [x] Page journal d'activité (timeline avec filtres)
-- [x] Composants interactifs (toggles, sliders, radio buttons)
-- [x] Navigation entre les écrans
-- [x] Bouton accès permissions depuis l'interface principale
-- [ ] Sauvegarde des préférences en temps réel (backend)
-- [ ] Validation et feedback utilisateur (backend)
+**Suivi et reporting :**
+- [ ] **Dashboard impayés** (vue d'ensemble)
+- [ ] **Taux recouvrement** (statistiques)
+- [ ] **Prévisions trésorerie** (impact impayés)
 
----
-
-## 📱 Phase 10 : Multi-plateformes (Semaine 9-12)
-
-### Applications natives
-- [ ] Application mobile iOS (React Native)
-- [ ] Application mobile Android (React Native)
-- [ ] Application desktop Windows (Electron)
-- [ ] Application desktop Mac (Electron)
-- [ ] Application desktop Linux (Electron)
-
-### Synchronisation
-- [ ] Sync temps réel entre appareils
-- [ ] Mode hors-ligne
-- [ ] Notifications push
+**Tests requis :**
+- [ ] Test 100 factures impayées (toutes relancées)
+- [ ] Test paiement entre relances (stop automatique)
+- [ ] Test ton emails (validation utilisateur)
+- [ ] Mesure taux recouvrement (vs manuel)
+- [ ] **Résultat attendu : +30% recouvrement**
 
 ---
 
-## 🚀 Phase 11 : Déploiement sur unialist.fr (Semaine 4 - Jour 20)
+### 📅 PRIORITÉ 3 : Productivité quotidienne
 
-### Infrastructure Vercel
-- [ ] Configuration Vercel
-- [ ] Variables d'environnement production
-- [ ] Base de données production
-- [ ] Monitoring (Sentry, etc.)
+#### Fonctionnalité 5 : Agenda intelligent vocal
+**Objectif :** Gérer son agenda en parlant, zéro friction
 
-### Domaine
-- [x] Réservation domaines (unialist.fr, .com, etc.)
-- [ ] Configuration DNS vers Vercel
-- [ ] SSL automatique
-- [ ] Redirection www
+- [ ] **Création RDV vocale** ("Bloque jeudi 14h avec M. Dupont")
+- [ ] **Modification vocale** ("Décale le RDV de demain à vendredi")
+- [ ] **Rappels intelligents** (avant RDV, avec infos contextuelles)
+- [ ] **Optimisation planning** (suggestions créneaux)
+- [ ] **Synchronisation calendriers** (Google, Outlook)
+- [ ] **Préparation RDV** (documents, infos client, trajet)
 
-### Tests
-- [ ] Tests de charge
-- [ ] Tests end-to-end
-- [ ] Tests de sécurité
-- [ ] Tests multi-navigateurs
-
-### Lancement
-- [ ] Déploiement production
-- [ ] Vérification finale
-- [ ] Monitoring actif
-- [ ] Support client prêt
+**Tests requis :**
+- [ ] Test reconnaissance vocale (95% précision)
+- [ ] Test cas ambigus ("jeudi prochain" = quel jeudi ?)
+- [ ] Test conflits (2 RDV même heure)
+- [ ] **Résultat attendu : Création RDV en <30 secondes**
 
 ---
 
-## 📊 Métriques de succès visées
+#### Fonctionnalité 6 : Gestion emails intelligente
+**Objectif :** Traiter emails 10x plus vite
 
-### Rétention
-- **Objectif :** Taux de rétention > 90% (mois 2)
-- **Indicateur :** Les utilisateurs ne peuvent plus s'en passer
+- [ ] **Tri automatique** (important/spam/newsletters)
+- [ ] **Réponses suggérées** (IA génère brouillons)
+- [ ] **Suivi automatique** (relance si pas de réponse)
+- [ ] **Extraction infos** (RDV, tâches, factures)
+- [ ] **Templates emails** (réponses types)
 
-### Viralité
-- **Objectif :** Croissance organique > 40%
-- **Indicateur :** Bouche-à-oreille naturel, pub gratuite
-
-### Satisfaction
-- **Objectif :** NPS > 50
-- **Indicateur :** Les utilisateurs recommandent activement
-
-### Engagement
-- **Objectif :** Utilisation quotidienne > 30 min
-- **Indicateur :** Intégré dans le workflow quotidien
+**Tests requis :**
+- [ ] Test précision tri (>90%)
+- [ ] Test qualité réponses (validation utilisateur)
+- [ ] **Résultat attendu : -50% temps emails**
 
 ---
 
-## 🎯 Priorités immédiates (Cette semaine)
+#### Fonctionnalité 7 : Suivi trésorerie temps réel
+**Objectif :** Savoir où on en est financièrement, toujours
 
-1. **Rebranding UNIALIST** (Aujourd'hui)
-2. **Landing page percutante** (Aujourd'hui)
-3. **Onboarding magique** (Demain)
-4. **Premier module métier** (Mécanicien - Jour 3-5)
-5. **Système de gains visibles** (Jour 6-7)
+- [ ] **Solde bancaire** (synchronisation quotidienne)
+- [ ] **Prévisions 30/60/90 jours** (factures à venir)
+- [ ] **Alertes trésorerie** (si risque découvert)
+- [ ] **Catégorisation dépenses** (automatique)
+- [ ] **Rapports mensuels** (P&L simplifié)
+
+**Tests requis :**
+- [ ] Test synchronisation bancaire (API)
+- [ ] Test précision prévisions (vs réalité)
+- [ ] **Résultat attendu : Visibilité trésorerie claire**
 
 ---
 
-**Dernière mise à jour :** Jour 1 - Nom et logo finalisés ✅
+#### Fonctionnalité 8 : Veille concurrentielle automatique
+**Objectif :** Rester informé sans effort
+
+- [ ] **Monitoring concurrents** (prix, offres, actualités)
+- [ ] **Alertes changements** (baisse prix, nouvelle offre)
+- [ ] **Analyse tendances** (marché, secteur)
+- [ ] **Suggestions actions** (réagir aux mouvements)
+
+**Tests requis :**
+- [ ] Test détection changements (précision)
+- [ ] Test pertinence alertes (pas de spam)
+- [ ] **Résultat attendu : Veille efficace sans y penser**
+
+---
+
+#### Fonctionnalité 9 : Gestion équipe (si applicable)
+**Objectif :** Coordonner l'équipe facilement
+
+- [ ] **Tâches et projets** (attribution, suivi)
+- [ ] **Reporting automatique** (avancement projets)
+- [ ] **Communication centralisée** (messages, notifications)
+- [ ] **Permissions granulaires** (qui voit quoi)
+
+**Tests requis :**
+- [ ] Test multi-utilisateurs (5-10 personnes)
+- [ ] Test permissions (sécurité)
+- [ ] **Résultat attendu : Coordination fluide**
+
+---
+
+#### Fonctionnalité 10 : Suggestions business proactives
+**Objectif :** L'IA qui aide à prendre de meilleures décisions
+
+- [ ] **Analyse données** (CA, marges, tendances)
+- [ ] **Détection opportunités** (clients à relancer, produits à pousser)
+- [ ] **Alertes risques** (clients qui partent, baisse activité)
+- [ ] **Suggestions optimisation** (réduire coûts, augmenter CA)
+
+**Tests requis :**
+- [ ] Test pertinence suggestions (validation utilisateur)
+- [ ] Mesure impact (CA, marges)
+- [ ] **Résultat attendu : Décisions data-driven**
+
+---
+
+## 🔐 PHASE 3 : Système de permissions avancé (Semaine 13-14)
+
+### Interface de gestion des permissions ✅ COMPLÉTÉ
+- [x] Page vue d'ensemble (toggles par catégorie)
+- [x] Page configuration détaillée (3 niveaux)
+- [x] Page journal d'activité (timeline + filtres)
+- [x] Navigation fluide
+- [x] Bouton accès depuis interface principale
+
+### Backend permissions (À FAIRE)
+- [ ] **Sauvegarde préférences** (base de données)
+- [ ] **Application permissions** (respect choix utilisateur)
+- [ ] **Validation actions** (demande confirmation si requis)
+- [ ] **Logs actions** (traçabilité complète)
+- [ ] **Révocation instantanée** (stop immédiat)
+
+---
+
+## 📊 PHASE 4 : Métriques et amélioration continue (Semaine 15-16)
+
+### Métriques techniques
+- [ ] **Uptime monitoring** (objectif : 99.9%)
+- [ ] **Performance monitoring** (temps réponse <500ms)
+- [ ] **Error tracking** (taux erreur <0.1%)
+- [ ] **Usage analytics** (fonctionnalités utilisées)
+
+### Métriques business
+- [ ] **Temps gagné/jour** (mesure réelle)
+- [ ] **Taux satisfaction** (NPS >50)
+- [ ] **Taux rétention** (>95%)
+- [ ] **ROI utilisateur** (10x minimum)
+
+### Amélioration continue
+- [ ] **A/B testing** (optimisation UX)
+- [ ] **Feedback utilisateurs** (collecte systématique)
+- [ ] **Roadmap produit** (priorisation features)
+- [ ] **Itérations rapides** (release hebdomadaire)
+
+---
+
+## 🚀 PHASE 5 : Déploiement et marketing (Semaine 17-20)
+
+### Déploiement production
+- [ ] **Migration Vercel** (depuis Manus)
+- [ ] **Configuration domaine** (unialist.fr)
+- [ ] **SSL automatique** (HTTPS)
+- [ ] **CDN global** (performance mondiale)
+- [ ] **Monitoring production** (alertes 24/7)
+
+### Marketing et acquisition
+- [ ] **Landing page optimisée** (conversion >5%)
+- [ ] **SEO** (référencement Google)
+- [ ] **Vidéos démo** (TikTok, Instagram, YouTube)
+- [ ] **Campagnes pub** (Google Ads, Facebook Ads)
+- [ ] **Affiliation** (programme influenceurs)
+- [ ] **Partenariats** (experts-comptables, CCI)
+
+### Support et documentation
+- [ ] **Base de connaissances** (FAQ, guides)
+- [ ] **Tutoriels vidéo** (onboarding)
+- [ ] **Support chat** (réponse <1h)
+- [ ] **Communauté** (forum utilisateurs)
+
+---
+
+## 📱 PHASE 6 : Extensions futures (Mois 5-12)
+
+### Autres modules métiers
+- [ ] Module Famille/Ménagère
+- [ ] Module Mécanicien
+- [ ] Module Artisan
+- [ ] Module Silver Care (surveillance personnes âgées)
+- [ ] Module Développeur
+- [ ] Module Marketeur
+- [ ] Module Étudiant
+- [ ] Module Professions libérales
+
+### Fonctionnalités avancées
+- [ ] Voice (commandes vocales)
+- [ ] Vision (analyse photos/documents)
+- [ ] Apprentissage web temps réel
+- [ ] Intégrations tierces (Autodis, etc.)
+- [ ] API publique (développeurs)
+
+### Multi-plateformes
+- [ ] App mobile iOS
+- [ ] App mobile Android
+- [ ] App desktop Windows
+- [ ] App desktop Mac
+- [ ] App desktop Linux
+- [ ] Extension navigateur
+
+---
+
+## 📈 OBJECTIFS CHIFFRÉS (6 mois)
+
+### Utilisateurs
+- Mois 1 : 100 utilisateurs (beta testeurs)
+- Mois 3 : 500 utilisateurs (early adopters)
+- Mois 6 : 2,000 utilisateurs (croissance)
+
+### Revenus
+- Mois 1 : 300€ (10 payants × 30€)
+- Mois 3 : 15,000€ (500 payants × 30€)
+- Mois 6 : 60,000€ (2,000 payants × 30€)
+
+### Qualité
+- Uptime : 99.9%
+- NPS : >50
+- Churn : <5%/mois
+- Support : <1h réponse
+
+---
+
+## 🎯 PRINCIPES DE DÉVELOPPEMENT
+
+### Qualité avant quantité
+- ✅ Chaque fonctionnalité développée à 100%
+- ✅ Tests intensifs avant déploiement
+- ✅ Validation utilisateur en conditions réelles
+- ✅ Zéro compromis sur la fiabilité
+
+### Itération rapide
+- ✅ Releases hebdomadaires
+- ✅ Feedback utilisateurs intégré
+- ✅ Amélioration continue
+- ✅ Pivot si nécessaire
+
+### Focus utilisateur
+- ✅ Résoudre de vrais problèmes
+- ✅ Créer de la valeur mesurable
+- ✅ Simplicité d'utilisation
+- ✅ Support réactif
+
+---
+
+**Dernière mise à jour :** 28 octobre 2025
+**Statut :** Phase 1 en cours (Fondations solides)
 

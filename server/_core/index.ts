@@ -7,6 +7,9 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { initializeBackupSystem } from "../backup";
+import { initializeMonitoring, monitoringMiddleware } from "../monitoring";
+import { initializeSecurity } from "../security";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -30,9 +33,20 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  
+  // Initialize systems
+  console.log("[System] Initializing core systems...");
+  initializeSecurity();
+  initializeMonitoring();
+  initializeBackupSystem();
+  console.log("[System] ✅ All systems initialized\n");
+  
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  
+  // Monitoring middleware (track all requests)
+  app.use(monitoringMiddleware);
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   // tRPC API
