@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy, Download, Zap, Clock, DollarSign } from "lucide-react";
+import { Copy, Download, Zap, Clock, DollarSign, Share2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface InvoiceData {
@@ -65,6 +65,26 @@ Conditions de paiement : 30 jours
       description: "Intégration PDP (Chorus Pro, Pennylane) en cours de développement",
       duration: 5000,
     });
+  };
+
+  const handleShare = (method: 'email' | 'whatsapp' | 'sms') => {
+    const subject = `Facture ${data.invoiceNumber} - ${data.client}`;
+    const body = `Bonjour,\n\nVeuillez trouver ci-dessous les détails de la facture :\n\nClient : ${data.client}\nMontant HT : ${data.amountHT.toFixed(2)} €\nTVA 20% : ${data.tva.toFixed(2)} €\nMontant TTC : ${data.amountTTC.toFixed(2)} €\nDescription : ${data.description}\nDate : ${data.date}\nN° Facture : ${data.invoiceNumber}\n\nCordialement`;
+
+    switch (method) {
+      case 'email':
+        window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+        toast.success('Email ouvert !');
+        break;
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodeURIComponent(subject + '\n\n' + body)}`);
+        toast.success('WhatsApp ouvert !');
+        break;
+      case 'sms':
+        window.open(`sms:?body=${encodeURIComponent(subject + '\n\n' + body)}`);
+        toast.success('SMS ouvert !');
+        break;
+    }
   };
 
   return (
@@ -132,25 +152,58 @@ Conditions de paiement : 30 jours
           → Vous collez dans votre logiciel de facturation<br />
           → Vous envoyez via votre PDP
         </p>
-        <div className="flex gap-2">
-          <Button
-            onClick={handleCopyData}
-            variant="outline"
-            size="sm"
-            className="flex-1"
-          >
-            <Copy className="w-4 h-4 mr-2" />
-            Copier
-          </Button>
-          <Button
-            onClick={handleExportCSV}
-            variant="outline"
-            size="sm"
-            className="flex-1"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Export CSV
-          </Button>
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Button
+              onClick={handleCopyData}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Copy className="w-4 h-4 mr-2" />
+              Copier
+            </Button>
+            <Button
+              onClick={handleExportCSV}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Export CSV
+            </Button>
+          </div>
+          
+          {/* Boutons de partage */}
+          <div className="flex gap-2">
+            <Button
+              onClick={() => handleShare('email')}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              Email
+            </Button>
+            <Button
+              onClick={() => handleShare('whatsapp')}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              WhatsApp
+            </Button>
+            <Button
+              onClick={() => handleShare('sms')}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              SMS
+            </Button>
+          </div>
         </div>
       </div>
 

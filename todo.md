@@ -738,3 +738,16 @@
 
 **Priorité : HAUTE** (obligatoire pour crédibilité B2B)
 
+
+
+
+### Partage Factures/Devis
+- [x] Bouton "Partager" dans InvoiceCard
+- [x] Bouton "Partager" dans QuoteCard
+- [x] Option Email (mailto:)
+- [x] Option WhatsApp
+- [x] Option SMS
+- [x] Génération contenu formaté pour chaque canal
+- [ ] Option Copier lien (futur)
+- [ ] Tracking analytics partages (futur)
+

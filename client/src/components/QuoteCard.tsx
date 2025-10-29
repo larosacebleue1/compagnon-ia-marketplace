@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy, Download, Sun, Zap, TrendingUp, Clock, DollarSign } from "lucide-react";
+import { Copy, Download, Sun, Zap, TrendingUp, Clock, DollarSign, Share2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface QuoteData {
@@ -86,6 +86,26 @@ MATÉRIEL RECOMMANDÉ
       description: "Fonctionnalité en cours de développement",
       duration: 3000,
     });
+  };
+
+  const handleShare = (method: 'email' | 'whatsapp' | 'sms') => {
+    const subject = `Devis Photovoltaïque - ${data.location}`;
+    const body = `Bonjour,\n\nVeuillez trouver ci-dessous votre devis photovoltaïque :\n\nLocalisation : ${data.location} (${data.region})\nPuissance : ${data.power} kWc (${data.panels} panneaux)\nProduction annuelle : ${data.annualProduction.toLocaleString()} kWh/an\n\nCoût installation : ${data.costTotal.toLocaleString()} € TTC\nAides disponibles : ${data.totalAides.toLocaleString()} €\nPrix final après aides : ${data.finalPrice.toLocaleString()} €\n\nÉconomies annuelles : ${data.annualSavings.toLocaleString()} €/an\nROI : ${data.roi} ans\nGain sur 25 ans : ${data.gain25Years.toLocaleString()} €\n\nCordialement`;
+
+    switch (method) {
+      case 'email':
+        window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+        toast.success('Email ouvert !');
+        break;
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodeURIComponent(subject + '\n\n' + body)}`);
+        toast.success('WhatsApp ouvert !');
+        break;
+      case 'sms':
+        window.open(`sms:?body=${encodeURIComponent(subject + '\n\n' + body)}`);
+        toast.success('SMS ouvert !');
+        break;
+    }
   };
 
   return (
@@ -220,25 +240,58 @@ MATÉRIEL RECOMMANDÉ
           </span>
         </div>
 
-        <div className="flex gap-2">
-          <Button
-            onClick={handleCopyData}
-            variant="outline"
-            size="sm"
-            className="flex-1"
-          >
-            <Copy className="w-4 h-4 mr-2" />
-            Copier le devis
-          </Button>
-          <Button
-            onClick={handleExportPDF}
-            variant="outline"
-            size="sm"
-            className="flex-1"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Export PDF
-          </Button>
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Button
+              onClick={handleCopyData}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Copy className="w-4 h-4 mr-2" />
+              Copier le devis
+            </Button>
+            <Button
+              onClick={handleExportPDF}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Export PDF
+            </Button>
+          </div>
+          
+          {/* Boutons de partage */}
+          <div className="flex gap-2">
+            <Button
+              onClick={() => handleShare('email')}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              Email
+            </Button>
+            <Button
+              onClick={() => handleShare('whatsapp')}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              WhatsApp
+            </Button>
+            <Button
+              onClick={() => handleShare('sms')}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              SMS
+            </Button>
+          </div>
         </div>
       </div>
 
