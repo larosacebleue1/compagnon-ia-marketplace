@@ -1,8 +1,9 @@
 import { publicProcedure, router } from '../_core/trpc';
 import { z } from 'zod';
+import { getZoneByDepartment, applyOrientationCoefficient } from '../data/zones-france';
 
-// Géocodage ville → coordonnées GPS
-async function geocodeCity(city: string): Promise<{ lat: number; lon: number }> {
+// Géocodage ville → coordonnées GPS + département
+async function geocodeCity(city: string): Promise<{ lat: number; lon: number; department: string; zoneName: string; zoneProduction: number }> {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)},France&format=json&limit=1`;
   
   const response = await fetch(url, {
@@ -21,26 +22,28 @@ async function geocodeCity(city: string): Promise<{ lat: number; lon: number }> 
     throw new Error('Ville introuvable');
   }
   
+  // Extraire le code département depuis l'adresse
+  const address = data[0].address || {};
+  const postcode = address.postcode || '';
+  const department = postcode.substring(0, 2);
+  
+  // Trouver la zone géographique
+  const zone = getZoneByDepartment(department);
+  
   return {
     lat: parseFloat(data[0].lat),
     lon: parseFloat(data[0].lon),
+    department,
+    zoneName: zone.name,
+    zoneProduction: zone.production,
   };
 }
 
-// Production par kWc (chiffres terrain expert - Marseille)
+// Production par kWc selon zone et orientation
 // Basés sur 25 ans d'expérience terrain
 // Incluent déjà les pertes réelles (salissure, câblage, micro-ombres, etc.)
-function getProductionPerKwc(orientation: string): number {
-  const productionBaseMarseille: Record<string, number> = {
-    'sud': 1600,
-    'sud-est': 1400,
-    'sud-ouest': 1400,
-    'est': 1300,
-    'ouest': 1300,
-    'nord': 800,
-  };
-  
-  return productionBaseMarseille[orientation] || 1600;
+function getProductionPerKwc(zoneProduction: number, orientation: string): number {
+  return applyOrientationCoefficient(zoneProduction, orientation);
 }
 
 // Dimensionnement optimal
@@ -172,8 +175,8 @@ export const pvgisRouter = router({
         // 2. Conversion facture → consommation annuelle
         const annualConsumption = (input.monthlyBill / 0.25) * 12;
         
-        // 3. Production par kWc (chiffres terrain)
-        const productionPerKwc = getProductionPerKwc(input.orientation);
+        // 3. Production par kWc (zone + orientation)
+        const productionPerKwc = getProductionPerKwc(coords.zoneProduction, input.orientation);
         
         // 4. Dimensionnement optimal
         const sizing = calculateOptimalSize({
@@ -205,6 +208,9 @@ export const pvgisRouter = router({
             city: input.city,
             lat: coords.lat,
             lon: coords.lon,
+            department: coords.department,
+            zone: coords.zoneName,
+            zoneProduction: coords.zoneProduction,
           },
           installation: {
             power: sizing.power,

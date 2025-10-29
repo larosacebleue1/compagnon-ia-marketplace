@@ -943,3 +943,24 @@
 - [ ] Liste fournisseurs (Urban Solar, My Light, Jpme)
 - [ ] Conditions d'éligibilité
 
+
+
+
+---
+
+## 🗺️ ZONES GÉOGRAPHIQUES FRANCE (Production photovoltaïque)
+
+### Backend API
+- [x] Créer table 5 zones géographiques (Nord 950, IDF 1150, Centre 1250, Toulouse 1450, Marseille 1600)
+- [x] Géolocalisation ville → département → zone
+- [x] Calculs production avec coefficient zone
+- [x] Affichage zone dans résultats
+- [x] Coefficients orientation (Sud 100%, Sud-Est/Ouest 87.5%, Est/Ouest 81.25%, Nord 50%)
+
+### Tests
+- [ ] Test Lille (Zone Nord) → 950 kWh/kWc/an
+- [ ] Test Paris (Zone IDF) → 1,150 kWh/kWc/an
+- [ ] Test Orléans (Zone Centre) → 1,250 kWh/kWc/an
+- [ ] Test Toulouse (Zone Sud-Ouest) → 1,450 kWh/kWc/an
+- [ ] Test Marseille (Zone Sud-Est) → 1,600 kWh/kWc/an
+
