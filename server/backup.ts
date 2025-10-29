@@ -149,7 +149,7 @@ async function saveBackupMetadata(
           status,
           error,
           url,
-          created_at
+          createdAt
         ) VALUES (
           '${metadata.timestamp.toISOString()}',
           '${metadata.type}',

@@ -11,9 +11,12 @@ import {
   updateConversation
 } from "./db";
 import { invokeLLM } from "./_core/llm";
+import { SYSTEM_PROMPTS } from "./ai/config";
+import { userRouter } from "./api/user";
 
 export const appRouter = router({
   system: systemRouter,
+  user: userRouter,
 
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -78,11 +81,15 @@ export const appRouter = router({
           content: msg.content,
         }));
 
+        // Récupérer le profil de l'utilisateur
+        const userProfileType = ctx.user.profileType || 'professionnel';
+        
         // Ajouter un message système si c'est la première interaction
         if (messages.length === 1) {
+          const systemPrompt = SYSTEM_PROMPTS[userProfileType as keyof typeof SYSTEM_PROMPTS] || SYSTEM_PROMPTS.professionnel;
           messages.unshift({
             role: "system",
-            content: `Tu es un compagnon IA personnel qui s'adapte à chaque utilisateur. Tu accompagnes l'utilisateur dans toutes ses tâches quotidiennes et professionnelles. Tu es capable d'exécuter des missions avec autorisation. Tu es respectueux, professionnel et toujours prêt à aider.${ctx.user.profession ? ` L'utilisateur est ${ctx.user.profession}.` : ""}`
+            content: systemPrompt
           });
         }
 

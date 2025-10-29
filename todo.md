@@ -499,3 +499,184 @@
 **Dernière mise à jour :** 28 octobre 2025
 **Statut :** Phase 1 en cours (Fondations solides)
 
+
+
+
+---
+
+## 🎯 PROTOTYPE DÉMONTRABLE - 3 PROFILS EXÉCUTABLES (PRIORITÉ ABSOLUE)
+
+### Objectif : Convaincre investisseurs avec démo fonctionnelle (2-3 heures)
+
+### Intégration IA Multi-Providers
+- [ ] Installer `ai` package (Vercel AI SDK)
+- [ ] Installer `@ai-sdk/openai` (GPT-4o-mini)
+- [ ] Installer `@ai-sdk/mistral` (Mistral Small backup)
+- [ ] Créer `/server/ai/config.ts` (configuration providers)
+- [ ] Créer `/server/api/chat.ts` (endpoint streaming)
+- [ ] Implémenter routage intelligent (selon profil utilisateur)
+- [ ] Gestion erreurs et fallback automatique
+- [ ] Rate limiting (100 msg/h par utilisateur)
+
+### PROFIL 1 : Compagnon Solitude 💙
+**Objectif : Démontrer empathie et impact social**
+
+**Backend :**
+- [ ] System prompt empathique (écoute active, questions ouvertes)
+- [ ] Détection mots-clés détresse (tristesse, solitude, dépression)
+- [ ] Suggestions activités (selon localisation, météo, intérêts)
+- [ ] Historique conversations (mémoire contexte)
+- [ ] Alertes si signaux graves (contact ressources)
+
+**Frontend :**
+- [ ] Interface dédiée (couleurs apaisantes : bleu pastel, vert doux)
+- [ ] Avatar chaleureux
+- [ ] Animations douces (transitions fluides)
+- [ ] Bouton "J'ai besoin d'aide" (accès rapide ressources)
+- [ ] Historique conversations visible
+
+**Démo Investisseurs (2 min) :**
+- Scénario : "Je me sens seul aujourd'hui, personne ne m'appelle"
+- Réponse IA : Empathie + Questions + Suggestions concrètes
+- **Impact : Investisseurs VOIENT l'utilité sociale**
+
+### PROFIL 2 : Compagnon Professionnel 💼
+**Objectif : Démontrer ROI mesurable (temps + argent économisés)**
+
+**Backend :**
+- [ ] System prompt business (efficace, précis, professionnel)
+- [ ] Génération factures (extraction infos depuis conversation)
+- [ ] Template facture PDF (conforme légal)
+- [ ] Calculs automatiques (HT, TVA, TTC, remises)
+- [ ] Numérotation séquentielle (FACT-2025-001)
+- [ ] Export PDF (téléchargement immédiat)
+
+**Frontend :**
+- [ ] Interface business (couleurs pro : bleu foncé, gris)
+- [ ] Chronomètre ROI (démarrage automatique)
+- [ ] Affichage économies temps réel ("Économisé : 14.5 min = 12€")
+- [ ] Bouton "Générer facture" (raccourci)
+- [ ] Prévisualisation facture (avant export)
+- [ ] Historique factures (liste, recherche)
+
+**Démo Investisseurs (3 min) :**
+- Scénario : "Génère facture pour Jean Dupont, 1,500€ HT, installation photovoltaïque 3kWc"
+- Chronomètre : Démarre
+- IA : Génère facture complète en 30 secondes
+- Chronomètre : Stop → "Économie : 14.5 min vs manuel (15 min) = 12€"
+- Export PDF : Téléchargement immédiat
+- **Impact : Investisseurs VOIENT le ROI immédiat**
+
+### PROFIL 3 : Compagnon Expert Artisan 🏗️
+**Objectif : Démontrer expertise unique (25 ans photovoltaïque)**
+
+**Backend :**
+- [ ] System prompt expertise photovoltaïque (15 facettes)
+- [ ] Base connaissances (panneaux, onduleurs, batteries, aides)
+- [ ] Génération devis automatique (calculs techniques)
+- [ ] Calculs rentabilité (ROI, économies, autofinancement)
+- [ ] Recherche aides (MaPrimeRénov', CEE, TVA réduite)
+- [ ] Template devis PDF professionnel
+- [ ] Export PDF (avec schémas, photos)
+
+**Frontend :**
+- [ ] Interface métier (couleurs : orange, jaune, gris foncé)
+- [ ] Formulaire guidé (questions intelligentes)
+- [ ] Visualisation calculs (graphiques rentabilité)
+- [ ] Carte aides disponibles (montants, conditions)
+- [ ] Prévisualisation devis (avant export)
+- [ ] Bibliothèque matériel (panneaux, onduleurs)
+
+**Démo Investisseurs (5 min) :**
+- Scénario : "Devis installation 6kWc, maison 150m², toiture sud, client Marseille"
+- IA : Questions guidées (surface toit, orientation, budget, etc.)
+- Calculs automatiques :
+  - Puissance optimale : 6.3 kWc
+  - Production annuelle : 9,450 kWh
+  - Économies : 1,890€/an
+  - ROI : 8.5 ans
+  - Aides : MaPrimeRénov' 2,520€ + CEE 1,200€ = 3,720€
+  - Prix final : 12,000€ - 3,720€ = 8,280€
+- Génération devis PDF en 5 minutes
+- **Impact : Investisseurs VOIENT l'expertise impossible à copier**
+
+### Interface Vocale (Speech-to-Text + Text-to-Speech)
+- [ ] Installer `react-speech-recognition` (STT)
+- [ ] Installer `react-speech-kit` (TTS)
+- [ ] Bouton micro dans chat (design élégant)
+- [ ] Animation visualisation audio (ondes sonores)
+- [ ] Transcription temps réel (affichage texte)
+- [ ] Lecture automatique réponses (voix naturelle)
+- [ ] Sélection voix (masculine/féminine, langues)
+- [ ] Contrôles lecture (pause, stop, vitesse)
+
+### Sélecteur Profils (Interface Principale)
+- [ ] Page sélection profil (3 grandes cartes)
+- [ ] Design cartes (icône, titre, description, couleur)
+- [ ] Animation hover (effet 3D)
+- [ ] Stockage profil actif (localStorage + DB)
+- [ ] Switch profil dynamique (sans rechargement)
+- [ ] Personnalisation UI (couleurs, avatar selon profil)
+- [ ] Badge profil actif (visible en permanence)
+
+### Démonstration ROI (Métriques Temps Réel)
+- [ ] Chronomètre tâches (démarrage/arrêt automatique)
+- [ ] Calcul économies (temps × taux horaire configurable)
+- [ ] Affichage ROI en temps réel (pendant conversation)
+- [ ] Statistiques cumulées (jour, semaine, mois)
+- [ ] Dashboard ROI (graphiques, comparaisons)
+- [ ] Export rapport ROI (PDF pour comptabilité)
+
+### Tests & Validation
+- [ ] Test conversation Compagnon Solitude (empathie, pertinence)
+- [ ] Test génération facture (conformité légale, calculs exacts)
+- [ ] Test génération devis photovoltaïque (précision technique)
+- [ ] Test interface vocale (reconnaissance 95%+)
+- [ ] Test switch profils (fluidité, personnalisation)
+- [ ] Test chronomètre ROI (précision, affichage)
+- [ ] Validation expert-comptable (factures)
+- [ ] Validation artisan photovoltaïque (devis)
+
+### Documentation Démo
+- [ ] Script démo investisseurs (5 min chrono)
+- [ ] Vidéo screencast (3 profils en action)
+- [ ] FAQ anticipée (questions investisseurs)
+- [ ] Pitch deck mis à jour (avec captures écran)
+
+
+
+
+---
+
+## 🔥 EN COURS - Prototype Démontrable (2h)
+
+### Base de données
+- [x] Ajouter colonne `profileType` à table `conversations`
+- [x] Ajouter colonne `profileType` à table `users`
+
+### System Prompts Profils
+- [x] Modifier invokeLLM pour accepter profileType
+- [x] Intégrer SYSTEM_PROMPTS depuis ai/config.ts
+
+### Interface Sélection Profil
+- [x] Page `/profile-selection` (3 grandes cartes)
+- [x] Stockage profil actif (DB + localStorage)
+- [x] Redirection automatique si pas de profil
+
+### Génération Factures (Professionnel)
+- [ ] Détection demande facture dans message
+- [ ] Extraction infos (client, montant, description)
+- [ ] Template facture PDF
+- [ ] Bouton téléchargement
+
+### Génération Devis (Artisan)
+- [ ] Détection demande devis photovoltaïque
+- [ ] Questions guidées (localisation, surface, etc.)
+- [ ] Calculs automatiques (ROI, aides)
+- [ ] Template devis PDF
+
+### Interface Vocale
+- [ ] Bouton micro (Speech-to-Text)
+- [ ] Lecture automatique réponses (Text-to-Speech)
+- [ ] Animation visualisation audio
+

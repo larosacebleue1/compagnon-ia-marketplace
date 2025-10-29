@@ -153,7 +153,7 @@ async function saveMetricsToDatabase(metrics: HealthMetrics): Promise<void> {
           total_requests,
           failed_requests,
           timestamp,
-          created_at
+          createdAt
         ) VALUES (
           ${metrics.uptime},
           ${metrics.avgResponseTime},
@@ -187,7 +187,7 @@ async function saveErrorToDatabase(error: string, stack?: string): Promise<void>
           error,
           stack,
           timestamp,
-          created_at
+          createdAt
         ) VALUES (
           '${error.replace(/'/g, "''")}',
           ${stack ? `'${stack.replace(/'/g, "''")}'` : "NULL"},
@@ -219,7 +219,7 @@ async function saveAlert(alert: Alert): Promise<void> {
           message,
           timestamp,
           resolved,
-          created_at
+          createdAt
         ) VALUES (
           '${alert.type}',
           '${alert.severity}',

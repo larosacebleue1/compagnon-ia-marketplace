@@ -1,0 +1,2 @@
+ALTER TABLE `conversations` ADD `profileType` enum('solitude','professionnel','artisan') DEFAULT 'professionnel';--> statement-breakpoint
+ALTER TABLE `users` ADD `profileType` enum('solitude','professionnel','artisan') DEFAULT 'professionnel';

@@ -14,6 +14,7 @@ export const users = mysqlTable("users", {
   // Profil utilisateur
   profession: varchar("profession", { length: 100 }),
   professionDetected: boolean("professionDetected").default(false),
+  profileType: mysqlEnum("profileType", ["solitude", "professionnel", "artisan"]).default("professionnel"),
   subscriptionTier: mysqlEnum("subscriptionTier", ["basic", "premium", "enterprise"]).default("basic").notNull(),
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -34,6 +35,7 @@ export const conversations = mysqlTable("conversations", {
   
   // Contexte de la conversation
   profession: varchar("profession", { length: 100 }),
+  profileType: mysqlEnum("profileType", ["solitude", "professionnel", "artisan"]).default("professionnel"),
   currentTask: text("currentTask"),
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),

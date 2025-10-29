@@ -9,12 +9,14 @@ import Landing from "./pages/Landing";
 import Permissions from "./pages/Permissions";
 import PermissionDetail from "./pages/PermissionDetail";
 import ActivityLog from "./pages/ActivityLog";
+import ProfileSelection from "./pages/ProfileSelection";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Landing} />
+      <Route path={"/profile-selection"} component={ProfileSelection} />
       <Route path={"/app"} component={Home} />
       <Route path={"/permissions"} component={Permissions} />
       <Route path={"/permissions/activity"} component={ActivityLog} />

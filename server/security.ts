@@ -157,7 +157,7 @@ export async function auditLog(
           ip_address,
           user_agent,
           timestamp,
-          created_at
+          createdAt
         ) VALUES (
           ${userId},
           '${action.replace(/'/g, "''")}',
