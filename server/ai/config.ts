@@ -148,22 +148,71 @@ Quand l'utilisateur demande une facture, génère EXACTEMENT ce format :
 - TVA réduite 10% si puissance ≤ 3kWc
 
 **Format devis :**
-Quand l'utilisateur demande un devis, pose des questions guidées :
+Quand l'utilisateur demande un devis, pose des questions guidées UNE PAR UNE :
 1. Localisation (ville) ?
 2. Surface toiture disponible (m²) ?
 3. Orientation toiture (sud, est, ouest) ?
-4. Inclinaison toiture (degrés) ?
-5. Consommation électrique annuelle (kWh) ?
-6. Budget maximum ?
+4. Consommation électrique annuelle (kWh ou €/mois) ?
 
-Puis génère un devis détaillé avec :
-- Puissance recommandée (kWc)
-- Production annuelle estimée (kWh)
-- Économies annuelles (€)
-- ROI (années)
-- Aides disponibles (€)
-- Prix final après aides (€)
-- Liste matériel (panneaux, onduleur, etc.)`,
+Puis génère EXACTEMENT ce format :
+
+---
+☀️ **DEVIS PHOTOVOLTAÏQUE PROFESSIONNEL**
+
+**Localisation :** [Ville] ([Région])
+**Ensoleillement :** [1,000-1,500] kWh/kWc/an
+
+**🔌 INSTALLATION RECOMMANDÉE**
+
+**Puissance :** [X] kWc ([Y] panneaux de 400Wc)
+**Surface nécessaire :** [Z] m²
+**Production annuelle :** [A] kWh/an
+**Autoconsommation estimée :** [B]% ([C] kWh/an)
+**Revente surplus :** [D] kWh/an à 0.13€/kWh
+
+**💰 RENTABILITÉ**
+
+**Coût installation :** [E] € TTC
+
+**Aides disponibles :**
+- MaPrimeRénov' : [F] €
+- CEE (Certificats Économies Énergie) : [G] €
+- TVA réduite 10% : [H] €
+**Total aides : [I] €**
+
+**Prix final après aides : [J] €**
+
+**Économies annuelles : [K] €/an**
+- Autoconsommation : [L] €
+- Revente surplus : [M] €
+
+**ROI (Retour sur Investissement) : [N] ans**
+**Gain sur 25 ans : [O] €**
+
+**🔧 MATÉRIEL RECOMMANDÉ**
+
+- Panneaux : [Marque] [Modèle] 400Wc (garantie 25 ans)
+- Onduleur : [Marque] [Modèle] (garantie 10 ans)
+- Structure : Aluminium anodisé
+- Câblage : Conforme NF C 15-100
+
+✅ **Temps économisé : 2 heures** (vs devis manuel)
+💰 **Économie : 100€** (2h × 50€/h)
+
+**Prochaines étapes :**
+1. Cliquez sur "Copier le devis" ci-dessous
+2. Envoyez au client ou imprimez
+3. Planifiez visite technique (gratuite)
+
+📞 **Contact : [Votre entreprise]**
+---
+
+**Calculs automatiques :**
+- Production : Puissance (kWc) × Ensoleillement région
+- Autoconsommation : 70% de la production (moyenne)
+- Économies : (Autoconso × 0.20€) + (Revente × 0.13€)
+- ROI : Prix final / Économies annuelles
+- Gain 25 ans : (Économies × 25) - Prix final`,
 };
 
 /**

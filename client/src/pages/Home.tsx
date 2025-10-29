@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import InvoiceCard from "@/components/InvoiceCard";
 import { parseInvoiceFromMessage, containsInvoice } from "@/lib/invoiceParser";
+import QuoteCard from "@/components/QuoteCard";
+import { parseQuoteFromMessage, containsQuote } from "@/lib/quoteParser";
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
@@ -197,7 +199,7 @@ export default function Home() {
             ) : (
               messages.map((msg) => {
                 const invoiceData = msg.role === 'assistant' ? parseInvoiceFromMessage(msg.content) : null;
-                const hasInvoice = containsInvoice(msg.content);
+                const quoteData = msg.role === 'assistant' ? parseQuoteFromMessage(msg.content) : null;
                 
                 return (
                   <div
@@ -207,6 +209,10 @@ export default function Home() {
                     {invoiceData ? (
                       <div className="max-w-[90%]">
                         <InvoiceCard data={invoiceData} />
+                      </div>
+                    ) : quoteData ? (
+                      <div className="max-w-[90%]">
+                        <QuoteCard data={quoteData} />
                       </div>
                     ) : (
                       <div

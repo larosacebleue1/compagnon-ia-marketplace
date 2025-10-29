@@ -674,10 +674,14 @@
 - [x] Rappel réglementaire PDP
 
 ### Génération Devis (Artisan)
-- [ ] Détection demande devis photovoltaïque
-- [ ] Questions guidées (localisation, surface, etc.)
-- [ ] Calculs automatiques (ROI, aides)
-- [ ] Template devis PDF
+- [x] Détection demande devis photovoltaïque
+- [x] Questions guidées (localisation, surface, orientation, consommation)
+- [x] Calculs automatiques (ROI, aides MaPrimeRénov'/CEE/TVA)
+- [x] Composant QuoteCard (affichage structuré professionnel)
+- [x] Bouton copie presse-papier
+- [x] Export PDF (prévu)
+- [x] Chronomètre ROI (2h économisées = 100€)
+- [x] Expertise 25 ans intégrée (calculs précis)
 
 ### Interface Vocale
 - [ ] Bouton micro (Speech-to-Text)
