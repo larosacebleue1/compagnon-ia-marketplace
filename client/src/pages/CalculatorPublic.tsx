@@ -23,12 +23,14 @@ export default function CalculatorPublic() {
     tilt: number;
     surface: number;
     monthlyBill: number;
+    hasShading: boolean;
   }>({
     city: '',
     orientation: 'sud',
     tilt: 30,
     surface: 50,
     monthlyBill: 150,
+    hasShading: false,
   });
 
   const [result, setResult] = useState<any>(null);
@@ -176,6 +178,38 @@ export default function CalculatorPublic() {
                   required
                   className="mt-2 text-lg"
                 />
+              </div>
+
+              {/* Ombrage */}
+              <div className="border-2 border-gray-200 rounded-lg p-6 bg-gray-50">
+                <div className="flex items-start gap-4">
+                  <input
+                    type="checkbox"
+                    id="hasShading"
+                    checked={formData.hasShading}
+                    onChange={(e) => setFormData({ ...formData, hasShading: e.target.checked })}
+                    className="mt-1 w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div className="flex-1">
+                    <Label htmlFor="hasShading" className="text-lg font-semibold cursor-pointer">
+                      🌳 Ma toiture a de l'ombrage (matin ou soir)
+                    </Label>
+                    <p className="text-sm text-gray-600 mt-2">
+                      Cochez cette case si votre toiture est ombragée par des arbres, bâtiments ou collines le matin ou le soir.
+                      <br />
+                      <span className="font-semibold text-orange-600">Décote appliquée : -10% sur la production</span>
+                    </p>
+                  </div>
+                </div>
+                {formData.hasShading && (
+                  <div className="mt-4 p-4 bg-orange-50 border border-orange-200 rounded-lg flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-orange-800">
+                      <strong>Ombrage détecté :</strong> La production sera réduite de 10% pour tenir compte des ombres.
+                      Cela reste une estimation conservative basée sur 15+ ans d'expérience terrain.
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Bouton Submit */}

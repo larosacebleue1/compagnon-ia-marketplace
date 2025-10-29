@@ -964,3 +964,24 @@
 - [ ] Test Toulouse (Zone Sud-Ouest) → 1,450 kWh/kWc/an
 - [ ] Test Marseille (Zone Sud-Est) → 1,600 kWh/kWc/an
 
+---
+
+## 🎯 PRÉCISION CANTONALE + DÉCOTE OMBRAGE
+
+### Précision géographique métropolitaine (20 zones)
+- [x] Créer base de données 20 zones métropolitaines avec production spécifique
+- [x] Géolocalisation ville → zone la plus proche (algorithme distance GPS)
+- [x] Afficher zone dans résultats
+- [x] Migration 5 zones → 20 zones métropolitaines
+- [x] Correction Marseille : 1,700 kWh/kWc/an (au lieu de 1,600)
+- [x] Ajaccio (Corse) : 1,750 kWh/kWc/an (meilleure zone France)
+- [x] Tests complets : 10/10 PASS
+
+### Décote ombrage terrain
+- [x] Ajouter question formulaire : "Ombrage matin ou soir ?" (checkbox)
+- [x] Appliquer décote -10% si ombrage coché
+- [x] Afficher décote dans résultats (transparence client)
+- [x] Explication tooltip : "Ombres d'arbres, bâtiments, collines réduisent production"
+- [x] Message alerte orange si ombrage coché
+- [x] Tests décote ombrage : PASS (1,700 → 1,530 kWh/kWc)
+

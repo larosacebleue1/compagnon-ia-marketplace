@@ -1,9 +1,9 @@
 import { publicProcedure, router } from '../_core/trpc';
 import { z } from 'zod';
-import { getZoneByDepartment, applyOrientationCoefficient } from '../data/zones-france';
+import { findNearestZone, applyOrientationCoefficient, applyShadingDiscount } from '../data/zones-metro';
 
-// Géocodage ville → coordonnées GPS + département
-async function geocodeCity(city: string): Promise<{ lat: number; lon: number; department: string; zoneName: string; zoneProduction: number }> {
+// Géocodage ville → coordonnées GPS
+async function geocodeCity(city: string): Promise<{ lat: number; lon: number }> {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)},France&format=json&limit=1`;
   
   const response = await fetch(url, {
@@ -22,28 +22,26 @@ async function geocodeCity(city: string): Promise<{ lat: number; lon: number; de
     throw new Error('Ville introuvable');
   }
   
-  // Extraire le code département depuis l'adresse
-  const address = data[0].address || {};
-  const postcode = address.postcode || '';
-  const department = postcode.substring(0, 2);
-  
-  // Trouver la zone géographique
-  const zone = getZoneByDepartment(department);
-  
   return {
     lat: parseFloat(data[0].lat),
     lon: parseFloat(data[0].lon),
-    department,
-    zoneName: zone.name,
-    zoneProduction: zone.production,
   };
 }
 
-// Production par kWc selon zone et orientation
-// Basés sur 25 ans d'expérience terrain
-// Incluent déjà les pertes réelles (salissure, câblage, micro-ombres, etc.)
-function getProductionPerKwc(zoneProduction: number, orientation: string): number {
-  return applyOrientationCoefficient(zoneProduction, orientation);
+// Production par kWc selon zone métropolitaine, orientation et ombrage
+// Basés sur 15+ ans d'expérience terrain
+// Valeurs RÉELLES observées (pas de décote supplémentaire)
+function getProductionPerKwc(lat: number, lon: number, orientation: string, hasShading: boolean): number {
+  // 1. Trouver la zone métropolitaine la plus proche
+  const zone = findNearestZone(lat, lon);
+  
+  // 2. Appliquer coefficient orientation
+  const productionWithOrientation = applyOrientationCoefficient(zone.productionSud, orientation);
+  
+  // 3. Appliquer décote ombrage si nécessaire (-10%)
+  const finalProduction = applyShadingDiscount(productionWithOrientation, hasShading);
+  
+  return finalProduction;
 }
 
 // Dimensionnement optimal
@@ -165,6 +163,7 @@ export const pvgisRouter = router({
         tilt: z.number().min(0).max(90),
         surface: z.number().min(10).max(500),
         monthlyBill: z.number().min(20).max(1000),
+        hasShading: z.boolean().optional().default(false),
       })
     )
     .mutation(async ({ input }) => {
@@ -172,32 +171,35 @@ export const pvgisRouter = router({
         // 1. Géocodage
         const coords = await geocodeCity(input.city);
         
-        // 2. Conversion facture → consommation annuelle
+        // 2. Trouver la zone métropolitaine la plus proche
+        const zone = findNearestZone(coords.lat, coords.lon);
+        
+        // 3. Conversion facture → consommation annuelle
         const annualConsumption = (input.monthlyBill / 0.25) * 12;
         
-        // 3. Production par kWc (zone + orientation)
-        const productionPerKwc = getProductionPerKwc(coords.zoneProduction, input.orientation);
+        // 4. Production par kWc (zone + orientation + ombrage)
+        const productionPerKwc = getProductionPerKwc(coords.lat, coords.lon, input.orientation, input.hasShading);
         
-        // 4. Dimensionnement optimal
+        // 5. Dimensionnement optimal
         const sizing = calculateOptimalSize({
           annualConsumption,
           productionPerKwc,
           surface: input.surface,
         });
         
-        // 5. Production finale
+        // 6. Production finale
         const annualProduction = Math.round(sizing.power * productionPerKwc);
         const selfConsumptionKwh = Math.round(annualProduction * 0.70);
         const surplusKwh = Math.round(annualProduction * 0.30);
         
-        // 6. Aides
+        // 7. Aides
         const aides = calculateAides(sizing.power);
         
-        // 7. Coûts
+        // 8. Coûts
         const costTotal = Math.round(sizing.power * 2000);
         const finalPrice = costTotal - aides.total;
         
-        // 8. Autofinancement
+        // 9. Autofinancement
         const autofinancement = calculateAutofinancement({
           finalPrice,
           annualProduction,
@@ -208,9 +210,9 @@ export const pvgisRouter = router({
             city: input.city,
             lat: coords.lat,
             lon: coords.lon,
-            department: coords.department,
-            zone: coords.zoneName,
-            zoneProduction: coords.zoneProduction,
+            zone: zone.name,
+            zoneCity: zone.city,
+            zoneProduction: zone.productionSud,
           },
           installation: {
             power: sizing.power,
