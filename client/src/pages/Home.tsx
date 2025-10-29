@@ -5,13 +5,15 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Send, Plus, LogOut, User, Settings } from "lucide-react";
+import { Loader2, Send, Plus, LogOut, User, Settings, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import InvoiceCard from "@/components/InvoiceCard";
 import { parseInvoiceFromMessage, containsInvoice } from "@/lib/invoiceParser";
 import QuoteCard from "@/components/QuoteCard";
 import { parseQuoteFromMessage, containsQuote } from "@/lib/quoteParser";
+import { useVoiceRecognition } from "@/hooks/useVoiceRecognition";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
@@ -23,7 +25,29 @@ export default function Home() {
   }
   const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
+  const [autoSpeak, setAutoSpeak] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const lastMessageRef = useRef<string>("");
+
+  // Reconnaissance vocale
+  const {
+    isListening,
+    transcript,
+    startListening,
+    stopListening,
+    isSupported: isVoiceSupported,
+  } = useVoiceRecognition({
+    onResult: (text) => {
+      setMessage(text);
+      toast.success('Transcription terminée !');
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  // Text-to-Speech
+  const { speak, stop: stopSpeaking, isSpeaking, isSupported: isTTSSupported } = useTextToSpeech();
 
   // Queries
   const { data: conversations, refetch: refetchConversations } = trpc.conversation.list.useQuery(undefined, {
@@ -69,6 +93,38 @@ export default function Home() {
       setCurrentConversationId(conversations[0].id);
     }
   }, [isAuthenticated, conversations, currentConversationId]);
+
+  // Lecture automatique des réponses IA
+  useEffect(() => {
+    if (autoSpeak && messages && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      
+      // Vérifier si c'est un nouveau message de l'assistant
+      if (
+        lastMessage.role === 'assistant' && 
+        lastMessage.content !== lastMessageRef.current
+      ) {
+        lastMessageRef.current = lastMessage.content;
+        
+        // Extraire le texte sans les factures/devis (trop long)
+        let textToSpeak = lastMessage.content;
+        
+        // Si c'est une facture ou un devis, lire uniquement un résumé
+        if (containsInvoice(textToSpeak)) {
+          textToSpeak = "Facture générée avec succès. Vous pouvez la copier ou l'exporter.";
+        } else if (containsQuote(textToSpeak)) {
+          textToSpeak = "Devis photovoltaïque généré avec succès. Vous pouvez le copier ou l'exporter.";
+        }
+        
+        // Limiter à 500 caractères pour éviter lecture trop longue
+        if (textToSpeak.length > 500) {
+          textToSpeak = textToSpeak.substring(0, 500) + "... Consultez le message complet à l'écran.";
+        }
+        
+        speak(textToSpeak);
+      }
+    }
+  }, [messages, autoSpeak, speak, containsInvoice, containsQuote]);
 
   const handleSendMessage = () => {
     if (!message.trim() || !currentConversationId) return;
@@ -242,26 +298,94 @@ export default function Home() {
 
         {/* Input Area */}
         <div className="border-t border-gray-200 bg-white p-4">
-          <div className="max-w-3xl mx-auto flex gap-2">
-            <Input
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Écrivez votre message..."
-              className="flex-1"
-              disabled={!currentConversationId || sendMessage.isPending}
-            />
-            <Button
-              onClick={handleSendMessage}
-              disabled={!message.trim() || !currentConversationId || sendMessage.isPending}
-              size="icon"
-            >
-              {sendMessage.isPending ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Send className="w-5 h-5" />
+          <div className="max-w-3xl mx-auto">
+            {/* Boutons de contrôle vocal */}
+            <div className="flex gap-2 mb-2 justify-end">
+              {isTTSSupported && (
+                <Button
+                  onClick={() => {
+                    setAutoSpeak(!autoSpeak);
+                    if (!autoSpeak) {
+                      toast.success('Lecture automatique activée');
+                    } else {
+                      toast.info('Lecture automatique désactivée');
+                      stopSpeaking();
+                    }
+                  }}
+                  variant={autoSpeak ? "default" : "outline"}
+                  size="sm"
+                  className="text-xs"
+                >
+                  {autoSpeak ? (
+                    <>
+                      <Volume2 className="w-4 h-4 mr-1" />
+                      Lecture auto ON
+                    </>
+                  ) : (
+                    <>
+                      <VolumeX className="w-4 h-4 mr-1" />
+                      Lecture auto OFF
+                    </>
+                  )}
+                </Button>
               )}
-            </Button>
+            </div>
+
+            {/* Transcription en cours */}
+            {isListening && transcript && (
+              <div className="mb-2 p-2 bg-blue-50 border border-blue-200 rounded text-sm text-blue-900">
+                <span className="font-semibold">🎤 Transcription :</span> {transcript}
+              </div>
+            )}
+
+            {/* Input avec boutons */}
+            <div className="flex gap-2">
+              <Input
+                value={isListening ? transcript : message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Écrivez votre message..."
+                className="flex-1"
+                disabled={!currentConversationId || sendMessage.isPending || isListening}
+              />
+              
+              {/* Bouton micro */}
+              {isVoiceSupported && (
+                <Button
+                  onClick={() => {
+                    if (isListening) {
+                      stopListening();
+                    } else {
+                      startListening();
+                      toast.info('🎤 Parlez maintenant...');
+                    }
+                  }}
+                  disabled={!currentConversationId || sendMessage.isPending}
+                  size="icon"
+                  variant={isListening ? "destructive" : "outline"}
+                  className={isListening ? "animate-pulse" : ""}
+                >
+                  {isListening ? (
+                    <MicOff className="w-5 h-5" />
+                  ) : (
+                    <Mic className="w-5 h-5" />
+                  )}
+                </Button>
+              )}
+
+              {/* Bouton envoyer */}
+              <Button
+                onClick={handleSendMessage}
+                disabled={!message.trim() || !currentConversationId || sendMessage.isPending || isListening}
+                size="icon"
+              >
+                {sendMessage.isPending ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

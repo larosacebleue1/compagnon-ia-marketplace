@@ -684,8 +684,15 @@
 - [x] Expertise 25 ans intégrée (calculs précis)
 
 ### Interface Vocale
-- [ ] Bouton micro (Speech-to-Text)
-- [ ] Lecture automatique réponses (Text-to-Speech)
+- [x] Bouton micro (Speech-to-Text)
+- [x] Transcription en temps réel
+- [x] Lecture automatique réponses (Text-to-Speech)
+- [x] Bouton activation/désactivation lecture auto
+- [x] Résumés intelligents (factures/devis)
+- [x] Limitation 500 caractères (confort écoute)
+- [x] Animation bouton micro (pulsation)
+- [x] Gestion permissions microphone
+- [x] Support français natif
 - [ ] Animation visualisation audio
 
 
