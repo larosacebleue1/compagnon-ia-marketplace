@@ -664,10 +664,14 @@
 - [x] Redirection automatique si pas de profil
 
 ### Génération Factures (Professionnel)
-- [ ] Détection demande facture dans message
-- [ ] Extraction infos (client, montant, description)
-- [ ] Template facture PDF
-- [ ] Bouton téléchargement
+- [x] Détection demande facture dans message
+- [x] Extraction infos (client, montant, description)
+- [x] Composant InvoiceCard (affichage structuré)
+- [x] Bouton copie presse-papier
+- [x] Export CSV
+- [x] Chronomètre ROI (temps économisé)
+- [x] 2 options (gratuit/payant 1.50€)
+- [x] Rappel réglementaire PDP
 
 ### Génération Devis (Artisan)
 - [ ] Détection demande devis photovoltaïque
@@ -679,4 +683,47 @@
 - [ ] Bouton micro (Speech-to-Text)
 - [ ] Lecture automatique réponses (Text-to-Speech)
 - [ ] Animation visualisation audio
+
+
+
+
+---
+
+## 🔮 ROADMAP POST-LEVÉE DE FONDS
+
+### Intégration Facturation Électronique (PDP)
+**Objectif :** Conformité réglementation 2025 + Automatisation complète
+
+**Phase 1 : Intégration Chorus Pro (Gratuit)**
+- [ ] Inscription Chorus Pro (plateforme publique)
+- [ ] Intégration API Chorus Pro
+- [ ] Génération factures Factur-X (PDF + XML)
+- [ ] Envoi automatique via Chorus Pro
+- [ ] Suivi statut (envoyée, reçue, rejetée)
+
+**Phase 2 : Intégrations PDP Privées (Payantes mais meilleures)**
+- [ ] Intégration Pennylane API (moderne, facile)
+- [ ] Intégration Sellsy API (bon rapport qualité/prix)
+- [ ] Intégration Sage API (grandes entreprises)
+- [ ] Sélecteur PDP (utilisateur choisit sa plateforme)
+
+**Phase 3 : Fonctionnalités Avancées**
+- [ ] Suivi paiements temps réel
+- [ ] Relances automatiques (J+7, J+15, J+30)
+- [ ] Détection impayés (alertes)
+- [ ] Génération lettres de relance
+- [ ] Mise en demeure automatique (J+45)
+- [ ] Export comptable (FEC, CSV)
+
+**Coûts estimés :**
+- Développement : 50k€ (3-6 mois, 2 devs)
+- API PDP : 0.50€ - 2€/facture
+- Maintenance : 5k€/an
+
+**ROI client :**
+- Temps économisé : 15 min/facture → 30 sec
+- Gain : 12.50€/facture (15 min × 50€/h)
+- Conformité garantie (évite amendes)
+
+**Priorité : HAUTE** (obligatoire pour crédibilité B2B)
 

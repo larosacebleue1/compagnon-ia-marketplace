@@ -8,6 +8,8 @@ import { trpc } from "@/lib/trpc";
 import { Loader2, Send, Plus, LogOut, User, Settings } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import InvoiceCard from "@/components/InvoiceCard";
+import { parseInvoiceFromMessage, containsInvoice } from "@/lib/invoiceParser";
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
@@ -193,22 +195,33 @@ export default function Home() {
                 </p>
               </div>
             ) : (
-              messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
+              messages.map((msg) => {
+                const invoiceData = msg.role === 'assistant' ? parseInvoiceFromMessage(msg.content) : null;
+                const hasInvoice = containsInvoice(msg.content);
+                
+                return (
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                      msg.role === "user"
-                        ? "bg-indigo-600 text-white"
-                        : "bg-white text-gray-900 border border-gray-200"
-                    }`}
+                    key={msg.id}
+                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
-                    <p className="whitespace-pre-wrap">{msg.content}</p>
+                    {invoiceData ? (
+                      <div className="max-w-[90%]">
+                        <InvoiceCard data={invoiceData} />
+                      </div>
+                    ) : (
+                      <div
+                        className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                          msg.role === "user"
+                            ? "bg-indigo-600 text-white"
+                            : "bg-white text-gray-900 border border-gray-200"
+                        }`}
+                      >
+                        <p className="whitespace-pre-wrap">{msg.content}</p>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
 
             {sendMessage.isPending && (
