@@ -751,3 +751,111 @@
 - [ ] Option Copier lien (futur)
 - [ ] Tracking analytics partages (futur)
 
+
+
+
+---
+
+## 🔧 CORRECTIONS URGENTES - Calculs Photovoltaïque (Priorité Haute)
+
+### Corrections Aides et Focus Autofinancement
+- [ ] **Supprimer fausses aides** (MaPrimeRénov', CEE non applicables au PV)
+- [ ] **Ajouter aides réelles 2025** (Prime autoconsommation, Tarif rachat EDF OA, TVA 10% si conditions)
+- [ ] **Focus AUTOFINANCEMENT** (mensualité crédit ≤ économie mensuelle)
+- [ ] **Calculer cash-flow net mensuel** (économie électricité - mensualité crédit)
+- [ ] **Afficher "AUTOFINANCÉ ✅"** si cash-flow > 0, sinon "NON AUTOFINANCÉ ❌"
+- [ ] **Graphique comparatif 15 ans** (avec PV vs sans PV - barres comparatives)
+- [ ] **Supprimer blabla gains 25 ans** → Focus concret immédiat (mensualités)
+- [ ] **Corriger system prompt Artisan** (calculs autofinancement)
+- [ ] **Corriger QuoteCard** (affichage mensualité + cash-flow + autofinancement)
+- [ ] **Corriger pitch deck** (slides démo avec argument autofinancement)
+- [ ] **Mettre à jour business plan** (projections réalistes sans fausses aides)
+
+**Argument clé :** "Vous ne payez plus EDF, vous payez VOTRE installation. Dans 15 ans, vous ne payez plus rien."
+
+**Formule magique :** Mensualité crédit ≤ Économie mensuelle électricité = AUTOFINANCÉ ✅
+
+
+
+
+---
+
+## 🏪 MARKETPLACE PHOTOVOLTAÏQUE B2B2C (Priorité Haute)
+
+### Modèle Économique
+**Principe :** Clients génèrent devis gratuit → Artisans achètent dossiers validés 300€
+
+**Revenus :**
+- Abonnement artisan : 49€/mois
+- Dossier client validé : 300€
+- Projection Année 3 (2000 artisans) : 15.6M€/an
+
+### Phase 1 : Landing Page Client (Public)
+- [ ] **Page d'accueil publique** (/calculateur-photovoltaique)
+- [ ] **Formulaire simple** (ville, surface toiture, orientation, facture EDF €/mois)
+- [ ] **Génération devis instantané** (sans connexion requise)
+- [ ] **Affichage autofinancement** (mensualité vs économie)
+- [ ] **Calcul cash-flow net** (AUTOFINANCÉ ✅ ou NON ❌)
+- [ ] **Bouton CTA** ("Je veux être contacté par des artisans")
+- [ ] **Formulaire coordonnées** (nom, email, téléphone, adresse complète)
+- [ ] **Validation dossier** (stockage base de données)
+- [ ] **Email confirmation client** ("3 artisans vont vous contacter sous 48h")
+
+### Phase 2 : Dashboard Artisan (Pro)
+- [ ] **Page "Dossiers Clients"** (/artisan/leads)
+- [ ] **Liste dossiers disponibles** (géolocalisés rayon 50km)
+- [ ] **Filtres** (budget, urgence, distance, statut)
+- [ ] **Carte interactive** (localisation dossiers)
+- [ ] **Détails dossier** (puissance, budget, coordonnées masquées)
+- [ ] **Bouton "Acheter ce dossier"** (300€ via Stripe)
+- [ ] **Révélation coordonnées** (après paiement)
+- [ ] **CRM intégré** (suivi prospects, notes, rappels)
+- [ ] **Historique achats** (dossiers achetés, CA généré)
+- [ ] **Statistiques** (taux conversion leads → ventes)
+
+### Phase 3 : Système de Paiement
+- [ ] **Intégration Stripe** (achat dossier 300€)
+- [ ] **Paiement en 1 clic** (carte enregistrée)
+- [ ] **Facturation automatique** (PDF envoyé par email)
+- [ ] **Gestion crédits** (pack 10 dossiers = 2,700€ au lieu de 3,000€)
+- [ ] **Historique transactions** (comptabilité)
+
+### Phase 4 : Notifications et Emails
+- [ ] **Email client** (après validation dossier)
+- [ ] **Email artisan** (nouveau dossier disponible dans région)
+- [ ] **SMS artisan** (notification temps réel, optionnel)
+- [ ] **Rappel artisan** (dossier non acheté après 24h)
+- [ ] **Email suivi** (client non contacté après 48h)
+
+### Phase 5 : Redirection IA
+- [ ] **Modifier system prompts** (tous profils)
+- [ ] **Détection demande photovoltaïque** (dans conversations)
+- [ ] **Redirection automatique** ("Je vous redirige vers notre calculateur gratuit")
+- [ ] **Lien direct** (/calculateur-photovoltaique?ref=chat)
+- [ ] **Tracking conversions** (chat → calculateur → dossier validé)
+
+### Phase 6 : SEO et Marketing
+- [ ] **Optimisation SEO** (mots-clés : "devis photovoltaïque gratuit", "calculateur solaire")
+- [ ] **Landing pages régionales** (/photovoltaique-marseille, /photovoltaique-lyon)
+- [ ] **Blog** (articles SEO : "Photovoltaïque rentable ?", "Autofinancement possible ?")
+- [ ] **Campagnes Google Ads** (CPC 2-5€, conversion 5%)
+- [ ] **Partenariats** (sites immobiliers, forums rénovation)
+
+### Phase 7 : Qualité et Modération
+- [ ] **Système de notes artisans** (clients notent après installation)
+- [ ] **Avis vérifiés** (email automatique après 30 jours)
+- [ ] **Blacklist artisans** (si trop de plaintes)
+- [ ] **Validation dossiers** (filtrage spam, doublons)
+- [ ] **Support client** (chat, email, téléphone)
+
+### Phase 8 : Analytics et Optimisation
+- [ ] **Dashboard analytics** (dossiers générés, taux conversion, CA)
+- [ ] **Funnel conversion** (visiteurs → devis → coordonnées → achat artisan)
+- [ ] **A/B testing** (landing page, CTA, formulaires)
+- [ ] **Heatmaps** (comportement utilisateurs)
+- [ ] **Optimisation continue** (amélioration taux conversion)
+
+**Estimation développement : 2-3 semaines**
+**Lancement Beta : 100 artisans + 1,000 clients**
+**Objectif Année 1 : 500 artisans, 12,000 dossiers, 3.9M€ CA**
+
