@@ -859,3 +859,87 @@
 **Lancement Beta : 100 artisans + 1,000 clients**
 **Objectif Année 1 : 500 artisans, 12,000 dossiers, 3.9M€ CA**
 
+
+
+
+---
+
+## 🌍 INTÉGRATION PVGIS - Calculs Photovoltaïques Précis (EN COURS)
+
+### Backend API PVGIS
+- [ ] **Créer endpoint `/api/pvgis/calculate`** (appel API PVGIS)
+- [ ] **Géocodage ville → lat/lon** (Nominatim OSM)
+- [ ] **Mapping orientations simplifiées → azimut PVGIS**
+  * Sud → 0°
+  * Sud-Est → -45°
+  * Sud-Ouest → 45°
+  * Est → -90°
+  * Ouest → 90°
+  * Nord → 180° (avec avertissement)
+- [ ] **Décote réaliste -10%** (au lieu de -14%)
+- [ ] **Calcul dimensionnement optimal** (70% autoconsommation)
+- [ ] **Gestion erreurs** (ville introuvable, API PVGIS down)
+
+### Frontend Formulaire Client
+- [ ] **Sélecteur orientation simplifié** (6 boutons avec icônes)
+- [ ] **Sélecteur inclinaison** (slider 0-90°, valeur par défaut 30°)
+- [ ] **Input ville** (avec autocomplétion)
+- [ ] **Input surface toiture** (m²)
+- [ ] **Input facture électrique** (€/mois)
+- [ ] **Avertissement orientation Nord** ("Production très faible, non recommandé")
+- [ ] **Aide visuelle** (schéma toiture avec angles)
+
+### Calculs Autofinancement
+- [ ] **Conversion facture → consommation** (kWh/an)
+- [ ] **Appel PVGIS** (production réelle selon localisation/orientation)
+- [ ] **Dimensionnement optimal** (puissance pour 70% autoconsommation)
+- [ ] **Calcul aides réelles 2025** (Prime autoconsommation, TVA 10% si applicable)
+- [ ] **Calcul mensualité crédit** (15 ans, 3%)
+- [ ] **Calcul économie mensuelle** (autoconsommation + revente)
+- [ ] **Calcul cash-flow net** (économie - mensualité)
+- [ ] **Détection autofinancement** (cash-flow > 0 ✅ ou < 0 ❌)
+
+### Affichage QuoteCard
+- [ ] **Badge AUTOFINANCÉ ✅** (vert) ou **NON AUTOFINANCÉ ❌** (rouge)
+- [ ] **Section autofinancement** (en gros, priorité visuelle)
+- [ ] **Mensualité crédit** vs **Économie mensuelle** (comparaison visuelle)
+- [ ] **Cash-flow net** (€/mois)
+- [ ] **Graphique comparatif 15 ans** (avec PV vs sans PV)
+- [ ] **Suppression anciennes aides** (MaPrimeRénov', CEE)
+
+### Tests et Validation
+- [ ] **Test Marseille** (Sud, 30°, 150€/mois)
+- [ ] **Test Lyon** (Sud-Est, 35°, 120€/mois)
+- [ ] **Test Lille** (Sud-Ouest, 40°, 100€/mois)
+- [ ] **Test orientation Nord** (avertissement affiché)
+- [ ] **Test API PVGIS indisponible** (message erreur gracieux)
+- [ ] **Validation calculs** (comparaison avec PVGIS manuel)
+
+**Priorité : HAUTE**
+**Temps estimé : 1h30**
+**Statut : EN COURS**
+
+
+
+
+---
+
+## 🔋 BATTERIE VIRTUELLE (Option Autoconsommation 95%)
+
+### Backend API
+- [ ] Ajouter paramètre `virtualBattery` (boolean)
+- [ ] Calcul avec 95% autoconsommation (au lieu de 70%)
+- [ ] Ajouter coût abonnement batterie (15€/mois)
+- [ ] Comparaison économie avec/sans batterie
+
+### Frontend Calculateur
+- [ ] Checkbox "Batterie virtuelle" avec tooltip
+- [ ] Affichage 2 scénarios (avec/sans)
+- [ ] Mise en avant gain supplémentaire
+- [ ] Explication concept (jour/nuit)
+
+### Documentation
+- [ ] Expliquer batterie virtuelle (userGuide.md)
+- [ ] Liste fournisseurs (Urban Solar, My Light, Jpme)
+- [ ] Conditions d'éligibilité
+

@@ -10,6 +10,7 @@ import Permissions from "./pages/Permissions";
 import PermissionDetail from "./pages/PermissionDetail";
 import ActivityLog from "./pages/ActivityLog";
 import ProfileSelection from "./pages/ProfileSelection";
+import CalculatorPublic from "./pages/CalculatorPublic";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -17,6 +18,7 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Landing} />
       <Route path={"/profile-selection"} component={ProfileSelection} />
+      <Route path={"/calculateur"} component={CalculatorPublic} />
       <Route path={"/app"} component={Home} />
       <Route path={"/permissions"} component={Permissions} />
       <Route path={"/permissions/activity"} component={ActivityLog} />

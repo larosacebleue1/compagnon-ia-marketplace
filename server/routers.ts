@@ -13,10 +13,12 @@ import {
 import { invokeLLM } from "./_core/llm";
 import { SYSTEM_PROMPTS } from "./ai/config";
 import { userRouter } from "./api/user";
+import { pvgisRouter } from "./api/pvgis";
 
 export const appRouter = router({
   system: systemRouter,
   user: userRouter,
+  pvgis: pvgisRouter,
 
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
