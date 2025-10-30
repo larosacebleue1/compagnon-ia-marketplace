@@ -57,6 +57,13 @@
       "when": 1761828029250,
       "tag": "0007_brief_eternals",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1761829985266,
+      "tag": "0008_futuristic_chimera",
+      "breakpoints": true
     }
   ]
 }

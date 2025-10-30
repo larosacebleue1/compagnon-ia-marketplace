@@ -82,6 +82,10 @@ export const leadsRouter = router({
       acceptedContact: z.boolean(),
       sourceUrl: z.string().optional(),
       sourceModule: z.string().optional(),
+      // Nouveaux champs parcours
+      chosenPath: z.enum(['standard', 'express']).optional().default('standard'),
+      depositAmount: z.string().optional(),
+      waiverSigned: z.boolean().optional().default(false),
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
@@ -107,6 +111,12 @@ export const leadsRouter = router({
           sourceUrl: input.sourceUrl,
           sourceModule: input.sourceModule,
           status: 'pending',
+          // Nouveaux champs parcours
+          chosenPath: input.chosenPath,
+          depositAmount: input.depositAmount,
+          waiverSigned: input.waiverSigned,
+          waiverSignedAt: input.waiverSigned ? new Date() : null,
+          coolingOffEndsAt: input.chosenPath === 'standard' ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) : null, // +14 jours si standard
         });
       
       const leadId = Number(result[0].insertId);

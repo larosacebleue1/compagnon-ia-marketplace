@@ -1115,3 +1115,35 @@
 - [ ] CGU client pré-commande
 
 
+
+
+
+---
+
+## 🚦 SYSTÈME 2 PARCOURS CLIENT (Standard vs Express)
+
+### Fonctionnalités
+- [x] Section choix parcours dans formulaire pré-commande
+- [x] Parcours Standard : Délai 14j, acompte après confirmation
+- [x] Parcours Express : Renonciation + Acompte 30% immédiat
+- [ ] Checkbox renonciation légale (Article L221-28)
+- [ ] Calcul automatique acompte 30% (1,650€ / 3,450€ / 4,500€)
+- [ ] Paiement Stripe acompte (si Express)
+- [ ] Webhook Stripe confirmation paiement
+- [ ] Message empowerment "VOUS êtes décisionnaire"
+
+### Base de données
+- [ ] Ajouter champ `chosenPath` ('standard' | 'express')
+- [ ] Ajouter champ `depositAmount` (montant acompte)
+- [ ] Ajouter champ `depositPaid` (boolean)
+- [ ] Ajouter champ `depositPaidAt` (date)
+- [ ] Ajouter champ `waiverSigned` (renonciation signée)
+- [ ] Ajouter statuts : quote_signed_standard, quote_signed_express, cooling_off, retracted, confirmed, paid_commission
+- [ ] Migration BDD
+
+### Workflow
+- [ ] Standard : Devis signé → 14j → Confirmation → Acompte → Commission → Travaux
+- [ ] Express : Devis signé + Acompte → Commission immédiate → Travaux 48h
+- [ ] Email client : Confirmation parcours choisi
+- [ ] Email installateur : Type parcours (standard/express)
+

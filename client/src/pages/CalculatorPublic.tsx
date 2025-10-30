@@ -40,6 +40,7 @@ export default function CalculatorPublic() {
 
   const [result, setResult] = useState<any>(null);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const calculateMutation = trpc.pvgis.calculate.useMutation({
     onSuccess: (data) => {
@@ -495,6 +496,44 @@ export default function CalculatorPublic() {
               </Card>
             )}
 
+            {/* Message Empowerment */}
+            {result.marketplace && (
+              <Card className="p-6 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-2 border-blue-300">
+                <div className="flex items-start gap-4">
+                  <div className="text-5xl">👑</div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                      🎯 VOUS êtes le décisionnaire de VOTRE projet
+                    </h3>
+                    <p className="text-gray-700 mb-4">
+                      Avec cette application, <strong>vous prenez le contrôle</strong> de votre installation photovoltaïque :
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-3 mb-4">
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✅</span>
+                        <span className="text-sm"><strong>Prix transparent</strong> fixé à l'avance (pas de surprise)</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✅</span>
+                        <span className="text-sm"><strong>Installateurs certifiés</strong> RGE validés par nous</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✅</span>
+                        <span className="text-sm"><strong>Vous choisissez</strong> quand démarrer (Standard ou Express)</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✅</span>
+                        <span className="text-sm"><strong>Suivi complet</strong> de A à Z dans l'application</span>
+                      </div>
+                    </div>
+                    <p className="text-lg font-semibold text-blue-900">
+                      🚀 Réalisez votre projet solaire en toute confiance, à VOTRE rythme.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            )}
+
             {/* CTA Marketplace */}
             {result.marketplace && (
               <Card className="p-8 bg-gradient-to-br from-green-500 to-emerald-600 text-white">
@@ -532,6 +571,41 @@ export default function CalculatorPublic() {
                   </div>
                 </div>
 
+                {/* Section Financement */}
+                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 mb-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="text-3xl">💳</div>
+                    <h4 className="text-xl font-bold">Financement facile</h4>
+                  </div>
+                  <p className="text-sm mb-3 opacity-90">
+                    Ce budget est <strong>facilement finançable</strong> auprès de votre banque :
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm mb-3">
+                    <div className="flex items-start gap-2">
+                      <span>•</span>
+                      <span>Crédit travaux à taux avantageux</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span>•</span>
+                      <span>Éco-PTZ possible (prêt à taux zéro)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span>•</span>
+                      <span>Mensualités à partir de <strong>{Math.round(result.marketplace.installationPrice / 120)}€/mois</strong> (sur 10 ans)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span>•</span>
+                      <span>Économies {'>'} Mensualités crédit</span>
+                    </div>
+                  </div>
+                  <div className="bg-green-500 text-white rounded-lg p-3 text-center font-bold">
+                    🚀 Vous gagnez de l'argent dès le 1er mois !
+                    <div className="text-sm font-normal mt-1 opacity-90">
+                      Vos économies d'électricité ({Math.round(result.autofinancement.annualSavings / 12)}€/mois) paient votre crédit ({Math.round(result.marketplace.installationPrice / 120)}€/mois) + gain net : <strong>{Math.round(result.autofinancement.annualSavings / 12 - result.marketplace.installationPrice / 120)}€/mois</strong>
+                    </div>
+                  </div>
+                </div>
+
                 <Button
                   onClick={() => setShowContactForm(true)}
                   className="w-full bg-white text-green-600 hover:bg-gray-100 text-2xl py-8 font-black shadow-2xl"
@@ -562,6 +636,364 @@ export default function CalculatorPublic() {
           </div>
         )}
       </div>
+
+      {/* Modal Formulaire Pré-commande */}
+      {showContactForm && result && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-8">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">📝 Finaliser ma demande</h2>
+                  <p className="text-gray-600">Installation {result.power} kWc - {result.marketplace.installationPrice.toLocaleString()}€</p>
+                </div>
+                <Button
+                  onClick={() => setShowContactForm(false)}
+                  variant="ghost"
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </Button>
+              </div>
+
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setIsSubmittingLead(true);
+                  
+                  const formData = new FormData(e.currentTarget);
+                  
+                  try {
+                    // Préparer les données du lead
+                    const chosenPath = formData.get('chosenPath') as string || 'standard';
+                    const waiverSigned = chosenPath === 'express' && formData.get('waiverSigned') === 'on';
+                    const depositAmount = chosenPath === 'express' ? Math.round(result.marketplace.installationPrice * 0.3).toString() : undefined;
+                    
+                    const leadData = {
+                      serviceId: 1, // Photovoltaïque (service créé dans seed)
+                      clientFirstName: formData.get('firstName') as string,
+                      clientLastName: formData.get('lastName') as string,
+                      clientEmail: formData.get('email') as string,
+                      clientPhone: formData.get('phone') as string,
+                      clientAddress: formData.get('address') as string,
+                      clientCity: formData.get('city') as string,
+                      clientPostalCode: formData.get('postalCode') as string,
+                      serviceData: {
+                        power: result.power,
+                        orientation: result.orientation,
+                        surface: result.surface,
+                        monthlyBill: result.monthlyBill,
+                        hasShading: result.hasShading,
+                        annualProduction: result.annualProduction,
+                        zone: result.zone,
+                        desiredDate: formData.get('desiredDate') as string || undefined,
+                        comments: formData.get('comments') as string || undefined,
+                      },
+                      estimatedAmount: result.marketplace.installationPrice.toString(),
+                      commissionAmount: result.marketplace.commission.toString(),
+                      acceptedTerms: true,
+                      acceptedContact: true,
+                      sourceUrl: window.location.href,
+                      sourceModule: 'photovoltaique',
+                      // Nouveaux champs parcours
+                      chosenPath: chosenPath as 'standard' | 'express',
+                      depositAmount,
+                      waiverSigned,
+                    };
+                    
+                    // Appeler API (utiliser fetch direct car useMutation ne peut pas être dans handler)
+                    const response = await fetch('/api/trpc/leads.createLead', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(leadData),
+                    });
+                    
+                    if (!response.ok) {
+                      throw new Error('Erreur lors de la création du lead');
+                    }
+                    
+                    toast.success('✅ Demande envoyée avec succès ! Un installateur vous contactera sous 48h.');
+                    setShowContactForm(false);
+                    
+                    // Rediriger vers page confirmation (optionnel)
+                    // window.location.href = '/lead-confirmation';
+                  } catch (error: any) {
+                    console.error('Error creating lead:', error);
+                    toast.error(error.message || 'Erreur lors de l\'envoi de la demande. Veuillez réessayer.');
+                  } finally {
+                    setIsSubmittingLead(false);
+                  }
+                }}
+                className="space-y-6"
+              >
+                {/* Coordonnées */}
+                <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">👤 Vos coordonnées</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="firstName">Prénom *</Label>
+                      <Input
+                        id="firstName"
+                        name="firstName"
+                        required
+                        placeholder="Marc"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="lastName">Nom *</Label>
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        required
+                        placeholder="Djedir"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="email">Email *</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        placeholder="marc@example.com"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="phone">Téléphone *</Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        required
+                        placeholder="06 12 34 56 78"
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Adresse installation */}
+                <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">🏠 Adresse d'installation</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="address">Adresse complète *</Label>
+                      <Input
+                        id="address"
+                        name="address"
+                        required
+                        placeholder="123 Avenue de la République"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="city">Ville *</Label>
+                        <Input
+                          id="city"
+                          name="city"
+                          required
+                          defaultValue={formData.city}
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="postalCode">Code postal *</Label>
+                        <Input
+                          id="postalCode"
+                          name="postalCode"
+                          required
+                          placeholder="13001"
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Préférences */}
+                <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">📅 Vos préférences</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="desiredDate">Date souhaitée pour les travaux (optionnel)</Label>
+                      <Input
+                        id="desiredDate"
+                        name="desiredDate"
+                        type="date"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="comments">Commentaires ou informations complémentaires (optionnel)</Label>
+                      <textarea
+                        id="comments"
+                        name="comments"
+                        rows={3}
+                        placeholder="Ex: Accès toiture difficile, présence d'animaux, etc."
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Choix parcours */}
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-300 rounded-xl p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">🚀 Choisissez votre parcours</h3>
+                  <p className="text-sm text-gray-600 mb-4">Sélectionnez le mode de démarrage qui vous convient</p>
+                  
+                  <div className="space-y-4">
+                    {/* Parcours Standard */}
+                    <label className="flex items-start gap-4 p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
+                      <input
+                        type="radio"
+                        name="chosenPath"
+                        value="standard"
+                        defaultChecked
+                        className="mt-1 w-5 h-5 text-blue-600"
+                      />
+                      <div className="flex-1">
+                        <div className="font-bold text-lg text-gray-900 mb-1">🐢 Parcours Standard (recommandé)</div>
+                        <ul className="text-sm text-gray-700 space-y-1 mb-2">
+                          <li>✅ Délai de rétractation <strong>14 jours conservé</strong></li>
+                          <li>✅ Acompte payable après confirmation (J+14)</li>
+                          <li>✅ Travaux démarrent à J+16 environ</li>
+                          <li>✅ Aucun paiement immédiat</li>
+                        </ul>
+                        <div className="text-xs text-gray-600 bg-white p-2 rounded">
+                          ⚖️ <strong>Votre droit :</strong> Conformément à la loi, vous disposez d'un délai de 14 jours pour vous rétracter après signature du devis, sans justification ni pénalité.
+                        </div>
+                      </div>
+                    </label>
+
+                    {/* Parcours Express */}
+                    <label className="flex items-start gap-4 p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-orange-500 hover:bg-orange-50 transition">
+                      <input
+                        type="radio"
+                        name="chosenPath"
+                        value="express"
+                        className="mt-1 w-5 h-5 text-orange-600"
+                        onChange={(e) => {
+                          const waiverSection = document.getElementById('waiverSection');
+                          if (waiverSection) {
+                            waiverSection.style.display = e.target.checked ? 'block' : 'none';
+                          }
+                        }}
+                      />
+                      <div className="flex-1">
+                        <div className="font-bold text-lg text-gray-900 mb-1">🚀 Parcours Express</div>
+                        <ul className="text-sm text-gray-700 space-y-1 mb-2">
+                          <li>⚠️ Renonciation au délai de rétractation</li>
+                          <li>💵 Acompte 30% à régler à l'installateur (<strong>{Math.round(result.marketplace.installationPrice * 0.3).toLocaleString()}€</strong>)</li>
+                          <li>⚡ Travaux démarrent <strong>sous 48h</strong></li>
+                          <li>🎯 Priorité absolue sur le planning</li>
+                        </ul>
+                        <div className="text-xs text-red-700 bg-red-50 p-2 rounded font-semibold">
+                          ⚠️ ATTENTION : En choisissant ce parcours, vous renoncez à votre droit de rétractation de 14 jours.
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+
+                  {/* Section renonciation (affichée uniquement si Express) */}
+                  <div id="waiverSection" style={{ display: 'none' }} className="mt-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg">
+                    <h4 className="font-bold text-red-900 mb-3">✍️ Renonciation au délai de rétractation</h4>
+                    <div className="space-y-3">
+                      <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="waiverSigned"
+                          className="mt-1 w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                        />
+                        <span className="text-sm text-gray-800">
+                          <strong>Je demande expressément l'exécution du contrat avant l'expiration du délai de rétractation de quatorze jours.</strong> Je reconnais avoir été informé(e) que cette demande entraîne la perte de mon droit de rétractation.
+                        </span>
+                      </label>
+                      <p className="text-xs text-gray-600 italic">
+                        (Article L221-28 du Code de la consommation)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Consentements */}
+                <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">✅ Confirmations</h3>
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="acceptedPrice"
+                        required
+                        className="mt-1 w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                      />
+                      <span className="text-sm text-gray-700">
+                        <strong>Je confirme mon intérêt</strong> pour une installation photovoltaïque {result.power} kWc au prix de <strong>{result.marketplace.installationPrice.toLocaleString()}€</strong>
+                      </span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="acceptedContact"
+                        required
+                        className="mt-1 w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                      />
+                      <span className="text-sm text-gray-700">
+                        <strong>J'accepte d'être contacté</strong> par un installateur certifié RGE pour une visite technique et l'établissement d'un devis détaillé
+                      </span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="acceptedTerms"
+                        required
+                        className="mt-1 w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                      />
+                      <span className="text-sm text-gray-700">
+                        J'accepte les <a href="/cgu" target="_blank" className="text-blue-600 underline">conditions générales d'utilisation</a> et la <a href="/privacy" target="_blank" className="text-blue-600 underline">politique de confidentialité</a>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Boutons */}
+                <div className="flex gap-4">
+                  <Button
+                    type="button"
+                    onClick={() => setShowContactForm(false)}
+                    variant="outline"
+                    className="flex-1"
+                    disabled={isSubmittingLead}
+                  >
+                    Annuler
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white text-lg py-6"
+                    disabled={isSubmittingLead}
+                  >
+                    {isSubmittingLead ? (
+                      <>
+                        <span className="animate-spin inline-block mr-2">⏳</span>
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      '✅ Envoyer ma demande'
+                    )}
+                  </Button>
+                </div>
+
+                <p className="text-center text-sm text-gray-600">
+                  🔒 Vos données sont sécurisées et ne seront transmises qu'aux installateurs certifiés de votre région
+                </p>
+              </form>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

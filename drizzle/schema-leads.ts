@@ -174,7 +174,23 @@ export const leads = mysqlTable('leads', {
   commissionAmount: decimal('commission_amount', { precision: 10, scale: 2 }).notNull(),
   
   // Statut
-  status: mysqlEnum('status', ['pending', 'available', 'reserved', 'contacted', 'quote_sent', 'accepted', 'paid', 'completed', 'cancelled']).notNull().default('pending'),
+  status: mysqlEnum('status', [
+    'pending', 
+    'available', 
+    'reserved', 
+    'contacted', 
+    'quote_sent', 
+    'quote_signed_standard',  // Devis signé, délai 14j
+    'quote_signed_express',   // Devis signé, renonciation + acompte
+    'cooling_off',            // En période rétractation 14j
+    'retracted',              // Client rétracté
+    'confirmed',              // Projet confirmé (après 14j ou acompte)
+    'accepted', 
+    'paid', 
+    'in_progress',            // Travaux en cours
+    'completed', 
+    'cancelled'
+  ]).notNull().default('pending'),
   
   // Réservation
   reservedBy: int('reserved_by'), // provider_id
@@ -184,6 +200,22 @@ export const leads = mysqlTable('leads', {
   // Conversion
   convertedBy: int('converted_by'), // provider_id qui a converti
   convertedAt: timestamp('converted_at'),
+  
+  // Parcours client (Standard vs Express)
+  chosenPath: mysqlEnum('chosen_path', ['standard', 'express']).default('standard'),
+  
+  // Acompte (si Express)
+  depositAmount: decimal('deposit_amount', { precision: 10, scale: 2 }),
+  depositPaid: boolean('deposit_paid').notNull().default(false),
+  depositPaidAt: timestamp('deposit_paid_at'),
+  depositPaymentIntentId: varchar('deposit_payment_intent_id', { length: 255 }), // Stripe payment_intent
+  
+  // Renonciation délai rétractation (si Express)
+  waiverSigned: boolean('waiver_signed').notNull().default(false),
+  waiverSignedAt: timestamp('waiver_signed_at'),
+  
+  // Délai rétractation (si Standard)
+  coolingOffEndsAt: timestamp('cooling_off_ends_at'), // Date fin délai 14j
   
   // Consentements
   acceptedTerms: boolean('accepted_terms').notNull().default(true),
