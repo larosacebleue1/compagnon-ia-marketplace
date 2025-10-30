@@ -24,6 +24,7 @@ export default function CalculatorPublic() {
     surface: number;
     monthlyBill: number;
     hasShading: boolean;
+    customCost?: number;
   }>({
     city: '',
     orientation: 'sud',
@@ -178,6 +179,27 @@ export default function CalculatorPublic() {
                   required
                   className="mt-2 text-lg"
                 />
+              </div>
+
+              {/* Coût personnalisé */}
+              <div className="border-2 border-blue-200 rounded-lg p-6 bg-blue-50">
+                <Label className="text-lg font-semibold flex items-center gap-2">
+                  💰 Coût de votre installation (€) - Optionnel
+                </Label>
+                <Input
+                  type="number"
+                  min="1000"
+                  max="100000"
+                  placeholder="Laissez vide pour calcul automatique"
+                  value={formData.customCost || ''}
+                  onChange={(e) => setFormData({ ...formData, customCost: e.target.value ? parseInt(e.target.value) : undefined })}
+                  className="mt-2 text-lg"
+                />
+                <p className="text-sm text-gray-600 mt-2">
+                  Si vous avez déjà un devis, saisissez le montant ici pour calculer votre seuil de rentabilité personnalisé.
+                  <br />
+                  <span className="font-semibold text-blue-600">Par défaut : 2,000€/kWc (prix marché 2025)</span>
+                </p>
               </div>
 
               {/* Ombrage */}
@@ -343,6 +365,67 @@ export default function CalculatorPublic() {
                 </div>
               </div>
             </Card>
+
+            {/* ROI - Seuil de Rentabilité */}
+            {result.roi && (
+              <Card className="p-8 bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-300">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  📈 Seuil de Rentabilité (ROI)
+                </h3>
+                
+                {/* Badge Rentabilité */}
+                <div className={`p-6 rounded-xl text-center mb-6 ${
+                  result.roi.paybackYears <= 15
+                    ? 'bg-gradient-to-r from-green-500 to-green-600'
+                    : result.roi.paybackYears <= 20
+                    ? 'bg-gradient-to-r from-orange-500 to-orange-600'
+                    : 'bg-gradient-to-r from-red-500 to-red-600'
+                } text-white shadow-xl`}>
+                  <div className="text-5xl font-bold mb-2">{result.roi.paybackYears} ans</div>
+                  <div className="text-xl">pour amortir votre installation</div>
+                </div>
+
+                {/* Gains sur 25 ans */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="p-4 bg-white rounded-lg border-2 border-green-300">
+                    <div className="text-sm text-gray-600 mb-1">Économies totales (25 ans)</div>
+                    <div className="text-3xl font-bold text-green-600">{result.roi.totalSavings25Years.toLocaleString()}€</div>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border-2 border-purple-300">
+                    <div className="text-sm text-gray-600 mb-1">Gain net après amortissement</div>
+                    <div className="text-3xl font-bold text-purple-600">+{result.roi.netGain25Years.toLocaleString()}€</div>
+                  </div>
+                </div>
+
+                {/* Tableau évolution */}
+                <div className="bg-white rounded-lg p-4">
+                  <h4 className="font-semibold mb-3 text-gray-700">📅 Évolution de vos économies</h4>
+                  <div className="space-y-2">
+                    {result.roi.yearlyBreakdown.map((item: any) => (
+                      <div key={item.year} className="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span className="font-semibold">Année {item.year}</span>
+                        <div className="text-right">
+                          <div className="text-sm text-gray-600">Économies cumulées : {item.cumulativeSavings.toLocaleString()}€</div>
+                          <div className={`font-bold ${
+                            item.netGain >= 0 ? 'text-green-600' : 'text-red-600'
+                          }`}>
+                            {item.netGain >= 0 ? '+' : ''}{item.netGain.toLocaleString()}€
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Message explicatif */}
+                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-gray-700">
+                    💡 <strong>Durée de vie installation :</strong> 25 ans minimum. Les panneaux photovoltaïques
+                    continuent de produire au-delà, avec un rendement légèrement réduit.
+                  </p>
+                </div>
+              </Card>
+            )}
 
             {/* CTA */}
             <Card className="p-8 bg-gradient-to-r from-blue-600 to-green-600 text-white text-center">

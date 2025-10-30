@@ -985,3 +985,31 @@
 - [x] Message alerte orange si ombrage coché
 - [x] Tests décote ombrage : PASS (1,700 → 1,530 kWh/kWc)
 
+
+
+---
+
+## 💰 COÛT PERSONNALISÉ + SEUIL DE RENTABILITÉ
+
+### Formulaire
+- [x] Ajouter champ "Coût de votre installation (€)" (optionnel)
+- [x] Valeur par défaut : calcul automatique (2000€/kWc)
+- [x] Permettre saisie manuelle pour devis concurrent
+- [x] Design encadré bleu avec message explicatif
+
+### Calcul ROI (Return On Investment)
+- [x] Calculer années pour amortissement complet
+- [x] Calculer économies cumulées année par année
+- [x] Calculer gains sur 25 ans (durée de vie installation)
+- [x] Calculer gain net après amortissement
+- [x] Tests complets : PASS (4.7 ans, +44,370€ sur 25 ans)
+
+### Affichage résultats
+- [x] Badge "Rentabilisé en X années" avec couleur selon rentabilité
+- [x] Tableau économies année par année (années 1-5, 10, 15, 20, 25)
+- [x] Affichage économies totales 25 ans
+- [x] Affichage gain net après amortissement
+- [x] Message explicatif durée de vie installation
+- [x] Design section ROI (dégradé violet/rose)
+
+

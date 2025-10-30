@@ -109,7 +109,7 @@ function calculateAides(power: number): {
   };
 }
 
-// Calcul autofinancement
+// Calcul autofinancement + ROI
 function calculateAutofinancement(params: {
   finalPrice: number;
   annualProduction: number;
@@ -119,6 +119,12 @@ function calculateAutofinancement(params: {
   cashFlowNet: number;
   isAutofinanced: boolean;
   monthlyBillAfter: number;
+  roi: {
+    paybackYears: number;
+    totalSavings25Years: number;
+    netGain25Years: number;
+    yearlyBreakdown: Array<{ year: number; cumulativeSavings: number; netGain: number }>;
+  };
 } {
   // Mensualité crédit 15 ans à 3%
   const monthlyRate = 0.03 / 12;
@@ -135,8 +141,8 @@ function calculateAutofinancement(params: {
   const savingsAutoconsommation = selfConsumptionKwh * 0.25; // 0.25€/kWh
   const savingsSurplus = surplusKwh * 0.13; // 0.13€/kWh tarif EDF OA
   
-  const annualSavings = savingsAutoconsommation + savingsSurplus;
-  const monthlySavings = Math.round(annualSavings / 12);
+  const totalAnnualSavings = savingsAutoconsommation + savingsSurplus;
+  const monthlySavings = Math.round(totalAnnualSavings / 12);
   
   const cashFlowNet = monthlySavings - monthlyPayment;
   const isAutofinanced = cashFlowNet > 0;
@@ -145,12 +151,41 @@ function calculateAutofinancement(params: {
   const monthlyBillBefore = Math.round((selfConsumptionKwh / 0.70) * 0.25 / 12);
   const monthlyBillAfter = Math.round(monthlyBillBefore * 0.30);
   
+  // Calcul ROI (Return On Investment)
+  const paybackYears = Math.round((params.finalPrice / totalAnnualSavings) * 10) / 10; // Arrondi à 1 décimale
+  
+  // Calcul sur 25 ans (durée de vie installation)
+  const totalSavings25Years = Math.round(totalAnnualSavings * 25);
+  const netGain25Years = totalSavings25Years - params.finalPrice;
+  
+  // Détail année par année (premières années + jalons importants)
+  const yearlyBreakdown = [];
+  for (let year = 1; year <= 25; year++) {
+    const cumulativeSavings = Math.round(totalAnnualSavings * year);
+    const netGain = cumulativeSavings - params.finalPrice;
+    
+    // Garder années 1-5, 10, 15, 20, 25
+    if (year <= 5 || year === 10 || year === 15 || year === 20 || year === 25) {
+      yearlyBreakdown.push({
+        year,
+        cumulativeSavings,
+        netGain,
+      });
+    }
+  }
+  
   return {
     monthlyPayment,
     monthlySavings,
     cashFlowNet,
     isAutofinanced,
     monthlyBillAfter,
+    roi: {
+      paybackYears,
+      totalSavings25Years,
+      netGain25Years,
+      yearlyBreakdown,
+    },
   };
 }
 
@@ -164,6 +199,7 @@ export const pvgisRouter = router({
         surface: z.number().min(10).max(500),
         monthlyBill: z.number().min(20).max(1000),
         hasShading: z.boolean().optional().default(false),
+        customCost: z.number().optional(), // Coût personnalisé de l'installation (optionnel)
       })
     )
     .mutation(async ({ input }) => {
@@ -196,7 +232,7 @@ export const pvgisRouter = router({
         const aides = calculateAides(sizing.power);
         
         // 8. Coûts
-        const costTotal = Math.round(sizing.power * 2000);
+        const costTotal = input.customCost || Math.round(sizing.power * 2000);
         const finalPrice = costTotal - aides.total;
         
         // 9. Autofinancement
