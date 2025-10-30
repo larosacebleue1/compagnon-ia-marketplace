@@ -1182,3 +1182,56 @@
 - [ ] Liste documents téléchargeables
 - [ ] Boutons actions (CTA)
 
+
+
+
+---
+
+## 🏪 MARKETPLACE INSTALLATEURS - GÉNÉRATION REVENUS
+
+### Phase 1 : Inscription Prestataire (✅ TERMINÉ)
+- [x] Page `/inscription-installateur` publique
+- [x] Formulaire complet (entreprise, SIRET, contact, téléphone, email)
+- [x] Zones géographiques (95 départements sélectionnables)
+- [x] Certifications (champ texte libre)
+- [x] Services proposés (PV, plomberie, électricité, chauffage)
+- [x] Statut : pending (validation manuelle admin)
+- [x] API createProvider (validation SIRET unique)
+- [x] Intégration formulaire → API
+- [x] Message confirmation personnalisé
+- [x] Design responsive colorisé
+- [ ] Upload documents (Kbis, assurance, certifications) - pour plus tard
+- [ ] Email confirmation inscription - pour plus tard
+
+### Phase 2 : Marketplace Leads
+- [ ] Page `/marketplace` (protégée installateurs)
+- [ ] Authentification installateur
+- [ ] Liste leads disponibles (cards)
+- [ ] Filtres : zone, service, puissance, prix
+- [ ] Tri : date, prix, distance
+- [ ] Badge "NOUVEAU" (< 24h)
+- [ ] Badge "URGENT" (express)
+- [ ] Bouton "Réserver ce lead" (48h exclusivité)
+- [ ] Page détail lead (coordonnées si réservé)
+- [ ] Compte à rebours réservation (48h)
+- [ ] API reserveLead
+
+### Phase 3 : Workflow Devis
+- [ ] Section "Mes leads réservés"
+- [ ] Upload devis signé (photo/PDF)
+- [ ] Bouton "Client a signé - Acheter ce lead"
+- [ ] Page paiement Stripe (690€ pour 6kWc)
+- [ ] Webhook Stripe confirmation
+- [ ] Lead statut → "sold"
+- [ ] Email confirmation achat
+- [ ] Coordonnées client dévoilées définitivement
+- [ ] API createCommission
+
+### Phase 4 : Dashboard Installateur
+- [ ] Statistiques (leads achetés, CA généré, taux conversion)
+- [ ] Historique achats
+- [ ] Leads en cours (réservés)
+- [ ] Leads disponibles (zone)
+- [ ] Solde à payer
+- [ ] Factures téléchargeables
+

@@ -470,6 +470,75 @@ export const leadsRouter = router({
     }),
   
   /**
+   * Créer un profil prestataire (inscription)
+   */
+  createProvider: publicProcedure
+    .input(z.object({
+      companyName: z.string(),
+      siret: z.string().length(14),
+      contactName: z.string(),
+      contactEmail: z.string().email(),
+      contactPhone: z.string(),
+      address: z.string(),
+      city: z.string(),
+      postalCode: z.string(),
+      serviceDepartments: z.array(z.string()),
+      services: z.array(z.string()),
+      certifications: z.string().optional(),
+      description: z.string().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error('Database not available');
+      
+      // Vérifier si SIRET existe déjà
+      const [existing] = await db
+        .select()
+        .from(providers)
+        .where(eq(providers.siret, input.siret))
+        .limit(1);
+      
+      if (existing) {
+        throw new Error('Ce SIRET est déjà enregistré');
+      }
+      
+      // TODO: Récupérer serviceIds depuis les slugs
+      // Pour l'instant, on met photovoltaique (id=1) par défaut
+      const serviceIds = [1]; // Photovoltaïque
+      
+      // Créer un compte utilisateur temporaire (userId)
+      // TODO: Intégrer avec système auth
+      const userId = Math.floor(Math.random() * 1000000); // Temporaire
+      
+      // Créer le provider
+      const result = await db
+        .insert(providers)
+        .values({
+          userId,
+          companyName: input.companyName,
+          siret: input.siret,
+          contactName: input.contactName,
+          contactEmail: input.contactEmail,
+          contactPhone: input.contactPhone,
+          address: input.address,
+          city: input.city,
+          postalCode: input.postalCode,
+          serviceIds,
+          interventionDepartments: input.serviceDepartments,
+          certifications: input.certifications ? { rge: input.certifications } : null,
+          status: 'pending', // Validation manuelle admin
+        });
+      
+      const providerId = Number(result[0].insertId);
+      
+      return {
+        success: true,
+        providerId,
+        message: 'Inscription envoyée avec succès ! Nous validons votre dossier sous 48h.',
+      };
+    }),
+  
+  /**
    * Lister mes leads (prestataire)
    */
   myLeads: protectedProcedure

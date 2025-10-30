@@ -12,6 +12,7 @@ import ActivityLog from "./pages/ActivityLog";
 import ProfileSelection from "./pages/ProfileSelection";
 import CalculatorPublic from "./pages/CalculatorPublic";
 import LeadDashboard from "./pages/LeadDashboard";
+import InstallerSignup from "./pages/InstallerSignup";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -21,6 +22,7 @@ function Router() {
       <Route path={"/profile-selection"} component={ProfileSelection} />
       <Route path={"/calculateur"} component={CalculatorPublic} />
       <Route path={"/dashboard/:token"} component={LeadDashboard} />
+      <Route path={"/inscription-installateur"} component={InstallerSignup} />
       <Route path={"/app"} component={Home} />
       <Route path={"/permissions"} component={Permissions} />
       <Route path={"/permissions/activity"} component={ActivityLog} />
