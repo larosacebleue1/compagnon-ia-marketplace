@@ -113,6 +113,8 @@ function calculateAides(power: number): {
 function calculateAutofinancement(params: {
   finalPrice: number;
   annualProduction: number;
+  electricityPrice?: number;
+  surplusPrice?: number;
 }): {
   monthlyPayment: number;
   monthlySavings: number;
@@ -138,8 +140,11 @@ function calculateAutofinancement(params: {
   const selfConsumptionKwh = params.annualProduction * 0.70;
   const surplusKwh = params.annualProduction * 0.30;
   
-  const savingsAutoconsommation = selfConsumptionKwh * 0.25; // 0.25€/kWh
-  const savingsSurplus = surplusKwh * 0.13; // 0.13€/kWh tarif EDF OA
+  const electricityPrice = params.electricityPrice || 0.25;
+  const surplusPrice = params.surplusPrice || 0.13;
+  
+  const savingsAutoconsommation = selfConsumptionKwh * electricityPrice;
+  const savingsSurplus = surplusKwh * surplusPrice;
   
   const totalAnnualSavings = savingsAutoconsommation + savingsSurplus;
   const monthlySavings = Math.round(totalAnnualSavings / 12);
@@ -200,6 +205,8 @@ export const pvgisRouter = router({
         monthlyBill: z.number().min(20).max(1000),
         hasShading: z.boolean().optional().default(false),
         customCost: z.number().optional(), // Coût personnalisé de l'installation (optionnel)
+        electricityPrice: z.number().min(0.20).max(0.40).optional().default(0.25), // Prix électricité €/kWh
+        surplusPrice: z.number().min(0.10).max(0.20).optional().default(0.13), // Prix rachat surplus €/kWh
       })
     )
     .mutation(async ({ input }) => {
@@ -239,6 +246,8 @@ export const pvgisRouter = router({
         const autofinancement = calculateAutofinancement({
           finalPrice,
           annualProduction,
+          electricityPrice: input.electricityPrice,
+          surplusPrice: input.surplusPrice,
         });
         
         return {
@@ -281,6 +290,11 @@ export const pvgisRouter = router({
             monthlyBillAfter: autofinancement.monthlyBillAfter,
             cashFlowNet: autofinancement.cashFlowNet,
             isAutofinanced: autofinancement.isAutofinanced,
+          },
+          roi: autofinancement.roi,
+          prices: {
+            electricityPrice: input.electricityPrice || 0.25,
+            surplusPrice: input.surplusPrice || 0.13,
           },
         };
       } catch (error) {

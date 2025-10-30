@@ -1013,3 +1013,33 @@
 - [x] Design section ROI (dégradé violet/rose)
 
 
+
+
+---
+
+## ⚡ PRIX ÉLECTRICITÉ AJUSTABLES + IMPACT RENTABILITÉ
+
+### Formulaire
+- [x] Ajouter champ "Prix électricité (€/kWh)" (optionnel)
+- [x] Valeur par défaut : 0.25€/kWh (tarif moyen 2025)
+- [x] Plage : 0.20€ à 0.40€/kWh
+- [x] Ajouter champ "Prix rachat surplus (€/kWh)" (optionnel)
+- [x] Valeur par défaut : 0.13€/kWh (EDF OA 2025)
+- [x] Plage : 0.10€ à 0.20€/kWh
+- [x] Design encadré violet avec 2 colonnes
+- [x] Message astuce simulation hausse prix
+
+### Calculs dynamiques
+- [x] Recalculer économies avec prix personnalisés
+- [x] Recalculer seuil rentabilité
+- [x] Recalculer gain 25 ans
+- [x] Impact en temps réel sur ROI
+- [x] Tests complets : 5 scénarios PASS
+
+### Affichage résultats
+- [x] Message explicatif prix utilisés dans section ROI
+- [x] Affichage prix électricité et rachat utilisés
+- [x] Impact visible : +20% électricité = -0.7 an rentabilité
+- [x] Impact visible : +40% électricité = -1.2 ans rentabilité
+
+

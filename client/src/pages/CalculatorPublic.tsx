@@ -25,6 +25,8 @@ export default function CalculatorPublic() {
     monthlyBill: number;
     hasShading: boolean;
     customCost?: number;
+    electricityPrice?: number;
+    surplusPrice?: number;
   }>({
     city: '',
     orientation: 'sud',
@@ -32,6 +34,8 @@ export default function CalculatorPublic() {
     surface: 50,
     monthlyBill: 150,
     hasShading: false,
+    electricityPrice: 0.25,
+    surplusPrice: 0.13,
   });
 
   const [result, setResult] = useState<any>(null);
@@ -200,6 +204,60 @@ export default function CalculatorPublic() {
                   <br />
                   <span className="font-semibold text-blue-600">Par défaut : 2,000€/kWc (prix marché 2025)</span>
                 </p>
+              </div>
+
+              {/* Prix électricité ajustables */}
+              <div className="border-2 border-purple-200 rounded-lg p-6 bg-purple-50">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  ⚡ Prix électricité (ajustables pour simulation)
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Prix électricité */}
+                  <div>
+                    <Label className="text-sm font-semibold">
+                      Prix électricité (€/kWh)
+                    </Label>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      min="0.20"
+                      max="0.40"
+                      value={formData.electricityPrice}
+                      onChange={(e) => setFormData({ ...formData, electricityPrice: parseFloat(e.target.value) })}
+                      className="mt-2"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">
+                      Défaut : 0.25€/kWh (tarif moyen 2025)
+                    </p>
+                  </div>
+
+                  {/* Prix rachat surplus */}
+                  <div>
+                    <Label className="text-sm font-semibold">
+                      Prix rachat surplus (€/kWh)
+                    </Label>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      min="0.10"
+                      max="0.20"
+                      value={formData.surplusPrice}
+                      onChange={(e) => setFormData({ ...formData, surplusPrice: parseFloat(e.target.value) })}
+                      className="mt-2"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">
+                      Défaut : 0.13€/kWh (EDF OA 2025)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 p-3 bg-white rounded-lg border border-purple-300">
+                  <p className="text-xs text-gray-700">
+                    💡 <strong>Astuce :</strong> Ajustez ces prix pour simuler l'impact d'une hausse future de l'électricité
+                    sur votre rentabilité. Plus le prix de l'électricité augmente, plus votre installation devient rentable !
+                  </p>
+                </div>
               </div>
 
               {/* Ombrage */}
@@ -372,6 +430,16 @@ export default function CalculatorPublic() {
                 <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
                   📈 Seuil de Rentabilité (ROI)
                 </h3>
+                
+                {/* Prix utilisés */}
+                {result.prices && (
+                  <div className="mb-4 p-3 bg-white rounded-lg border border-purple-200">
+                    <p className="text-sm text-gray-700">
+                      📊 <strong>Prix utilisés pour ce calcul :</strong> Électricité <span className="font-bold text-purple-600">{result.prices.electricityPrice.toFixed(2)}€/kWh</span> | 
+                      Rachat surplus <span className="font-bold text-purple-600">{result.prices.surplusPrice.toFixed(2)}€/kWh</span>
+                    </p>
+                  </div>
+                )}
                 
                 {/* Badge Rentabilité */}
                 <div className={`p-6 rounded-xl text-center mb-6 ${
