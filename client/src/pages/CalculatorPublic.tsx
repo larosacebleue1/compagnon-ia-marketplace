@@ -495,19 +495,56 @@ export default function CalculatorPublic() {
               </Card>
             )}
 
-            {/* CTA */}
-            <Card className="p-8 bg-gradient-to-r from-blue-600 to-green-600 text-white text-center">
-              <h3 className="text-3xl font-bold mb-4">Intéressé par cette installation ?</h3>
-              <p className="text-xl mb-6">
-                Recevez 3 devis gratuits d'artisans certifiés de votre région
-              </p>
-              <Button
-                onClick={() => setShowContactForm(true)}
-                className="bg-white text-blue-600 hover:bg-gray-100 text-lg py-6 px-12 font-bold"
-              >
-                Je veux être contacté
-              </Button>
-            </Card>
+            {/* CTA Marketplace */}
+            {result.marketplace && (
+              <Card className="p-8 bg-gradient-to-br from-green-500 to-emerald-600 text-white">
+                <div className="text-center mb-6">
+                  <h3 className="text-4xl font-bold mb-2">🌟 Installation clé en main</h3>
+                  <div className="text-6xl font-black mb-4">{result.marketplace.installationPrice.toLocaleString()}€</div>
+                  <p className="text-xl opacity-90">{result.marketplace.tier.description}</p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-6">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div>
+                      <div className="text-3xl font-bold">{result.power} kWc</div>
+                      <div className="text-sm opacity-90">Puissance</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold">{result.panels}</div>
+                      <div className="text-sm opacity-90">Panneaux</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 mb-6">
+                  <div className="flex items-start gap-3 text-sm">
+                    <div className="text-2xl">✅</div>
+                    <div>
+                      <strong>Inclus :</strong> Panneaux + Onduleur + Pose + Raccordement + Démarches administratives + Garanties
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 text-sm mt-3">
+                    <div className="text-2xl">⚠️</div>
+                    <div>
+                      <strong>Travaux supplémentaires éventuels</strong> (renforcement toiture, mise aux normes) facturés en sus après visite technique
+                    </div>
+                  </div>
+                </div>
+
+                <Button
+                  onClick={() => setShowContactForm(true)}
+                  className="w-full bg-white text-green-600 hover:bg-gray-100 text-2xl py-8 font-black shadow-2xl"
+                  size="lg"
+                >
+                  👍 J'accepte ce prix - Recevoir un devis
+                </Button>
+
+                <p className="text-center text-sm mt-4 opacity-90">
+                  🔒 Gratuit et sans engagement - Un installateur certifié RGE vous contactera sous 48h
+                </p>
+              </Card>
+            )}
 
             {/* Nouveau calcul */}
             <div className="text-center">

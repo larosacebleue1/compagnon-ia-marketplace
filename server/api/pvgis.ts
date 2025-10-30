@@ -1,6 +1,7 @@
-import { publicProcedure, router } from '../_core/trpc';
+import { router, publicProcedure } from '../_core/trpc';
 import { z } from 'zod';
 import { findNearestZone, applyOrientationCoefficient, applyShadingDiscount } from '../data/zones-metro';
+import { calculateExactPrice } from '../../shared/pricing-grid';
 
 // Géocodage ville → coordonnées GPS
 async function geocodeCity(city: string): Promise<{ lat: number; lon: number }> {
@@ -295,6 +296,10 @@ export const pvgisRouter = router({
           prices: {
             electricityPrice: input.electricityPrice || 0.25,
             surplusPrice: input.surplusPrice || 0.13,
+          },
+          marketplace: {
+            ...calculateExactPrice(sizing.power),
+            marketplaceEnabled: true,
           },
         };
       } catch (error) {

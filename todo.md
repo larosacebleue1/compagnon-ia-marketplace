@@ -1043,3 +1043,68 @@
 - [x] Impact visible : +40% électricité = -1.2 ans rentabilité
 
 
+
+
+---
+
+## 🏪 MARKETPLACE INSTALLATEURS (MODÈLE 6% VOLUME)
+
+### Grille tarifaire
+- [x] Prix installations fixes : 3kWc=5,500€ | 6kWc=11,500€ | 9kWc=15,000€
+- [x] Commission leads : 6% du prix installation (330€ / 690€ / 900€)
+- [x] Paiement au résultat (devis signé uniquement)
+- [x] Fichier shared/pricing-grid.ts avec grille et fonctions calcul
+- [x] Intégration API backend (calculateExactPrice)
+
+### Phase 1 : Côté CLIENT (EN COURS)
+- [x] Modifier calculateur : afficher prix grille selon puissance
+- [x] Grande carte verte attractive avec prix en GROS (11,500€)
+- [x] Description installation (puissance, panneaux)
+- [x] Mentions inclus/exclus (travaux supplémentaires)
+- [x] Bouton "👍 J'accepte ce prix - Recevoir un devis"
+- [x] Message "Gratuit et sans engagement"
+- [ ] Modal/Page pré-commande avec formulaire détaillé
+- [ ] Formulaire : Nom, Prénom, Téléphone, Email, Adresse, Date souhaitée
+- [ ] Checkbox engagement : "Je confirme mon intérêt pour installation à X€"
+- [ ] Checkbox contact : "J'accepte d'être contacté par installateur certifié"
+- [ ] Création lead en base de données (statut: "Pré-commande validée")
+- [ ] Message confirmation client après pré-commande
+
+### Phase 2 : Base de données
+- [ ] Table `leads` (id, client_info, project_details, price, status, created_at)
+- [ ] Table `installers` (id, company_name, contact, zone, certifications, status)
+- [ ] Table `lead_reservations` (id, lead_id, installer_id, reserved_until, status)
+- [ ] Table `payments` (id, lead_id, installer_id, amount, stripe_payment_id, status)
+
+### Phase 3 : Côté INSTALLATEUR
+- [ ] Page inscription installateur (company, contact, zone géographique)
+- [ ] Validation manuelle installateurs (admin)
+- [ ] Page marketplace leads (liste projets disponibles)
+- [ ] Filtres : Zone, Puissance, Prix, Statut
+- [ ] Card lead : Puissance, Ville, Prix, Commission 6%, Statut
+- [ ] Bouton "Réserver ce lead" (48h exclusivité)
+- [ ] Dévoilement coordonnées client après réservation
+- [ ] Page "Mes leads réservés"
+- [ ] Upload devis signé (PDF)
+- [ ] Paiement Stripe (330€ / 690€ / 900€)
+- [ ] Tableau de bord installateur (leads achetés, CA généré, taux conversion)
+
+### Phase 4 : Côté ADMIN
+- [ ] Page validation installateurs (approve/reject)
+- [ ] Page validation devis (vérifier conformité prix)
+- [ ] Dashboard revenus (leads vendus, CA mensuel, projections)
+- [ ] Statistiques : Taux conversion, Délai moyen signature, Top installateurs
+
+### Phase 5 : Notifications
+- [ ] Email client : Confirmation pré-commande
+- [ ] Email installateur : Nouveau lead disponible dans votre zone
+- [ ] Email installateur : Lead réservé expire dans 24h
+- [ ] Email admin : Nouveau devis à valider
+- [ ] Email installateur : Devis validé - Paiement requis
+
+### Mentions légales
+- [ ] Mention "Travaux supplémentaires facturés en sus" dans résultats
+- [ ] CGV marketplace installateurs
+- [ ] CGU client pré-commande
+
+
