@@ -1147,3 +1147,38 @@
 - [ ] Email client : Confirmation parcours choisi
 - [ ] Email installateur : Type parcours (standard/express)
 
+
+
+
+---
+
+## 📊 DASHBOARD CLIENT - SUIVI PROJET TEMPS RÉEL
+
+### Fonctionnalités
+- [x] Page dashboard accessible via URL unique (token)
+- [x] Timeline visuelle statut projet (9 étapes)
+- [x] Compte à rebours période rétractation (si Standard)
+- [x] Informations projet (puissance, prix, production, zone)
+- [x] Coordonnées installateur (une fois réservé)
+- [x] Actions client (contacter, signaler, annuler)
+- [x] Responsive mobile
+- [x] Redirection automatique après soumission lead
+- [ ] Section documents (devis, facture, certificats) - pour plus tard
+
+### Backend
+- [x] API getLeadByToken (accès sécurisé)
+- [x] Génération token unique à la création lead (32 caractères)
+- [x] Champ accessToken dans table leads
+- [x] Migration BDD (0009_supreme_bill_hollister.sql)
+- [x] Return accessToken dans createLead
+- [ ] Email confirmation avec lien dashboard - pour plus tard
+- [ ] Mise à jour statut lead (webhook installateur) - pour plus tard
+
+### Design
+- [ ] Timeline horizontale avec icônes
+- [ ] Badge statut coloré (en cours, terminé, annulé)
+- [ ] Carte informations projet
+- [ ] Carte installateur (si assigné)
+- [ ] Liste documents téléchargeables
+- [ ] Boutons actions (CTA)
+

@@ -91,6 +91,11 @@ export const leadsRouter = router({
       const db = await getDb();
       if (!db) throw new Error('Database not available');
       
+      // Générer token unique pour accès dashboard
+      const accessToken = Array.from({ length: 32 }, () => 
+        Math.random().toString(36).charAt(2)
+      ).join('');
+      
       // Créer le lead
       const result = await db
         .insert(leads)
@@ -117,6 +122,7 @@ export const leadsRouter = router({
           waiverSigned: input.waiverSigned,
           waiverSignedAt: input.waiverSigned ? new Date() : null,
           coolingOffEndsAt: input.chosenPath === 'standard' ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) : null, // +14 jours si standard
+          accessToken,
         });
       
       const leadId = Number(result[0].insertId);
@@ -132,7 +138,52 @@ export const leadsRouter = router({
       
       // TODO: Notifier prestataires de la zone
       
-      return { success: true, leadId };
+      return { success: true, leadId, accessToken };
+    }),
+  
+  /**
+   * Obtenir un lead par token (dashboard client)
+   */
+  getLeadByToken: publicProcedure
+    .input(z.object({
+      token: z.string(),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error('Database not available');
+      
+      const [lead] = await db
+        .select()
+        .from(leads)
+        .where(eq(leads.accessToken, input.token))
+        .limit(1);
+      
+      if (!lead) {
+        throw new Error('Lead non trouvé ou token invalide');
+      }
+      
+      // Récupérer le service
+      const [service] = await db
+        .select()
+        .from(services)
+        .where(eq(services.id, lead.serviceId))
+        .limit(1);
+      
+      // Récupérer le prestataire si assigné
+      let provider = null;
+      if (lead.reservedBy) {
+        [provider] = await db
+          .select()
+          .from(providers)
+          .where(eq(providers.id, lead.reservedBy))
+          .limit(1);
+      }
+      
+      return {
+        lead,
+        service,
+        provider,
+      };
     }),
   
   /**

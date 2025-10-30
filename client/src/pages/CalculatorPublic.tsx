@@ -712,11 +712,16 @@ export default function CalculatorPublic() {
                       throw new Error('Erreur lors de la création du lead');
                     }
                     
-                    toast.success('✅ Demande envoyée avec succès ! Un installateur vous contactera sous 48h.');
-                    setShowContactForm(false);
+                    const apiResult = await response.json();
+                    const accessToken = apiResult.result?.data?.accessToken;
                     
-                    // Rediriger vers page confirmation (optionnel)
-                    // window.location.href = '/lead-confirmation';
+                    if (accessToken) {
+                      // Rediriger vers dashboard client
+                      window.location.href = `/dashboard/${accessToken}`;
+                    } else {
+                      toast.success('✅ Demande envoyée avec succès ! Un installateur vous contactera sous 48h.');
+                      setShowContactForm(false);
+                    }
                   } catch (error: any) {
                     console.error('Error creating lead:', error);
                     toast.error(error.message || 'Erreur lors de l\'envoi de la demande. Veuillez réessayer.');

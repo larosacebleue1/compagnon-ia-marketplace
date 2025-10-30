@@ -225,6 +225,9 @@ export const leads = mysqlTable('leads', {
   sourceUrl: varchar('source_url', { length: 500 }), // URL d'origine
   sourceModule: varchar('source_module', { length: 100 }), // 'calculateur-pv', 'chat-ia', etc.
   
+  // Accès dashboard client
+  accessToken: varchar('access_token', { length: 64 }).notNull().unique(), // Token unique pour accès dashboard
+  
   // Métadonnées
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
