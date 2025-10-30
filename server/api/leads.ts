@@ -474,18 +474,34 @@ export const leadsRouter = router({
    */
   createProvider: publicProcedure
     .input(z.object({
+      // Entreprise
       companyName: z.string(),
       siret: z.string().length(14),
+      formeJuridique: z.string(),
+      capital: z.number(),
+      dateCreation: z.string(),
+      effectif: z.number(),
+      caAnnuel: z.number(),
+      numeroTVA: z.string().optional(),
+      siteWeb: z.string().optional(),
+      anneesExperience: z.number(),
+      // Contact
       contactName: z.string(),
       contactEmail: z.string().email(),
       contactPhone: z.string(),
+      // Adresse
       address: z.string(),
       city: z.string(),
       postalCode: z.string(),
+      // Services et zones
       serviceDepartments: z.array(z.string()),
       services: z.array(z.string()),
-      certifications: z.string().optional(),
-      description: z.string().optional(),
+      // Présentation
+      description: z.string().min(500),
+      specialites: z.string().optional(),
+      references: z.string().optional(),
+      // Certifications
+      certifications: z.string(),
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
@@ -515,17 +531,37 @@ export const leadsRouter = router({
         .insert(providers)
         .values({
           userId,
+          // Entreprise
           companyName: input.companyName,
           siret: input.siret,
+          formeJuridique: input.formeJuridique,
+          capital: input.capital.toString(),
+          dateCreation: new Date(input.dateCreation),
+          effectif: input.effectif,
+          caAnnuel: input.caAnnuel.toString(),
+          numeroTVA: input.numeroTVA || null,
+          siteWeb: input.siteWeb || null,
+          anneesExperience: input.anneesExperience,
+          // Contact
           contactName: input.contactName,
           contactEmail: input.contactEmail,
           contactPhone: input.contactPhone,
+          // Adresse
           address: input.address,
           city: input.city,
           postalCode: input.postalCode,
+          // Services et zones
           serviceIds,
           interventionDepartments: input.serviceDepartments,
-          certifications: input.certifications ? { rge: input.certifications } : null,
+          // Présentation
+          description: input.description,
+          specialites: input.specialites || null,
+          references: input.references || null,
+          // Certifications
+          certifications: { raw: input.certifications },
+          // Charte (signée via checkbox)
+          charteSignedAt: new Date(),
+          // Statut
           status: 'pending', // Validation manuelle admin
         });
       

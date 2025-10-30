@@ -8,7 +8,7 @@
  * - Extensible à l'infini
  */
 
-import { mysqlTable, int, varchar, text, timestamp, decimal, boolean, json, mysqlEnum } from 'drizzle-orm/mysql-core';
+import { mysqlTable, int, varchar, text, timestamp, decimal, boolean, json, mysqlEnum, date } from 'drizzle-orm/mysql-core';
 
 // ============================================================================
 // ENUMS
@@ -100,6 +100,14 @@ export const providers = mysqlTable('providers', {
   // Informations entreprise
   companyName: varchar('company_name', { length: 255 }).notNull(),
   siret: varchar('siret', { length: 14 }),
+  formeJuridique: varchar('forme_juridique', { length: 50 }), // SARL, SAS, EURL, etc.
+  capital: decimal('capital', { precision: 12, scale: 2 }), // Capital social
+  dateCreation: date('date_creation'),
+  effectif: int('effectif'), // Nombre salariés
+  caAnnuel: decimal('ca_annuel', { precision: 12, scale: 2 }), // CA dernier exercice
+  numeroTVA: varchar('numero_tva', { length: 20 }), // N° TVA intracommunautaire
+  siteWeb: varchar('site_web', { length: 255 }),
+  anneesExperience: int('annees_experience'),
   
   // Contact
   contactName: varchar('contact_name', { length: 255 }).notNull(),
@@ -123,8 +131,25 @@ export const providers = mysqlTable('providers', {
     [key: string]: boolean | string;
   }>(),
   
+  // Documents (URLs S3)
+  documentKbis: varchar('document_kbis', { length: 500 }), // URL Kbis
+  documentAssuranceDecennale: varchar('document_assurance_decennale', { length: 500 }),
+  documentAssuranceRC: varchar('document_assurance_rc', { length: 500 }),
+  documentCertifications: varchar('document_certifications', { length: 500 }),
+  documentURSSAF: varchar('document_urssaf', { length: 500 }),
+  
+  // Présentation
+  description: text('description'), // Description activité
+  specialites: text('specialites'), // Spécialités / Points forts
+  references: text('references'), // Références clients
+  
+  // Charte
+  charteSignedAt: timestamp('charte_signed_at'),
+  charteIpAddress: varchar('charte_ip_address', { length: 50 }),
+  
   // Statut
-  status: mysqlEnum('provider_status', ['pending', 'active', 'suspended', 'rejected']).notNull().default('pending'),
+  status: mysqlEnum('provider_status', ['pending', 'documents_incomplete', 'under_review', 'active', 'suspended', 'rejected']).notNull().default('pending'),
+  rejectionReason: text('rejection_reason'), // Raison du refus
   
   // Statistiques
   leadsReceived: int('leads_received').notNull().default(0),

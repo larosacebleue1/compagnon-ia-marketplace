@@ -1200,7 +1200,18 @@
 - [x] Intégration formulaire → API
 - [x] Message confirmation personnalisé
 - [x] Design responsive colorisé
-- [ ] Upload documents (Kbis, assurance, certifications) - pour plus tard
+- [x] Section documents (liste 5 documents requis)
+- [x] Charte qualité complète (4 sections + sanctions)
+- [x] Checkbox acceptation charte obligatoire
+- [x] Validation stricte (description 500 car, SIRET 14)
+- [x] Informations entreprise détaillées (capital, CA, effectif, forme juridique)
+- [x] Présentation activité (description, spécialités, références)
+- [x] Certifications obligatoires
+- [x] 19 nouveaux champs BDD providers
+- [x] Nouveaux statuts (documents_incomplete, under_review, rejected)
+- [x] Migration BDD (0010_parched_black_panther.sql)
+- [x] API createProvider mise à jour (tous champs)
+- [ ] Upload documents S3 (Kbis, assurances, etc.) - pour plus tard
 - [ ] Email confirmation inscription - pour plus tard
 
 ### Phase 2 : Marketplace Leads
