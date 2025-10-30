@@ -1070,11 +1070,18 @@
 - [ ] Création lead en base de données (statut: "Pré-commande validée")
 - [ ] Message confirmation client après pré-commande
 
-### Phase 2 : Base de données
-- [ ] Table `leads` (id, client_info, project_details, price, status, created_at)
-- [ ] Table `installers` (id, company_name, contact, zone, certifications, status)
-- [ ] Table `lead_reservations` (id, lead_id, installer_id, reserved_until, status)
-- [ ] Table `payments` (id, lead_id, installer_id, amount, stripe_payment_id, status)
+### Phase 2 : Base de données (✅ TERMINÉ)
+- [x] Table `services` (secteurs d'activité universels)
+- [x] Table `providers` (prestataires multi-secteurs)
+- [x] Table `leads` (demandes clients universelles)
+- [x] Table `leadReservations` (réservations 48h)
+- [x] Table `commissions` (paiements affiliation)
+- [x] Table `leadHistory` (traçabilité)
+- [x] Migration BDD réussie (22 tables)
+- [x] Seed data : 5 services initiaux
+- [x] API CRUD complète (leadsRouter)
+- [x] Intégration router principal
+- [x] Documentation architecture (ARCHITECTURE-LEADS.md)
 
 ### Phase 3 : Côté INSTALLATEUR
 - [ ] Page inscription installateur (company, contact, zone géographique)

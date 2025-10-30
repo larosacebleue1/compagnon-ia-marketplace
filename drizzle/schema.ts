@@ -361,3 +361,11 @@ export const betaRewards = mysqlTable("beta_rewards", {
 export type BetaReward = typeof betaRewards.$inferSelect;
 export type InsertBetaReward = typeof betaRewards.$inferInsert;
 
+
+
+// ============================================================================
+// SERVICE MISE EN RELATION UNIVERSEL
+// ============================================================================
+
+export * from './schema-leads';
+
