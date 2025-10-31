@@ -292,16 +292,27 @@ export default function Marketplace() {
 
                   {/* Footer */}
                   <div className="p-4 bg-gray-50 border-t border-gray-200">
-                    <button
-                      onClick={() => handleReserve(lead.id)}
-                      disabled={reserveLead.isPending}
-                      className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-green-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {reserveLead.isPending ? '⏳ Réservation...' : '🎯 Réserver ce lead (48h)'}
-                    </button>
-                    <p className="text-xs text-gray-500 text-center mt-2">
-                      Coordonnées client dévoilées après réservation
-                    </p>
+                    {lead.status === 'reserved' && lead.reservedBy === providerInfo?.id ? (
+                      <button
+                        onClick={() => setLocation(`/payment/${lead.id}`)}
+                        className="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white font-bold py-3 rounded-lg hover:from-green-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                      >
+                        💳 Acheter ce lead ({formatPrice(getCommission(lead.totalPrice))})
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => handleReserve(lead.id)}
+                          disabled={reserveLead.isPending || lead.status !== 'available'}
+                          className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-green-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {reserveLead.isPending ? '⏳ Réservation...' : '🎯 Réserver ce lead (48h)'}
+                        </button>
+                        <p className="text-xs text-gray-500 text-center mt-2">
+                          Coordonnées client dévoilées après réservation
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               );

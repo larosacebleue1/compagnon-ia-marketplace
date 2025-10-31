@@ -16,6 +16,7 @@ import { userRouter } from "./api/user";
 import { pvgisRouter } from "./api/pvgis";
 import { leadsRouter } from "./api/leads";
 import { providersAuthRouter } from "./api/providers-auth";
+import { stripePaymentRouter } from "./api/stripe-payment";
 
 export const appRouter = router({
   system: systemRouter,
@@ -23,6 +24,7 @@ export const appRouter = router({
   pvgis: pvgisRouter,
   leads: leadsRouter,
   providersAuth: providersAuthRouter,
+  stripePayment: stripePaymentRouter,
 
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

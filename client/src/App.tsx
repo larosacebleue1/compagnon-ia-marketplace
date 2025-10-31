@@ -15,6 +15,7 @@ import LeadDashboard from './pages/LeadDashboard';
 import Marketplace from './pages/Marketplace';
 import InstallerSignup from "./pages/InstallerSignup";
 import LoginInstallateur from "./pages/LoginInstallateur";
+import PaymentPage from "./pages/PaymentPage";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -27,6 +28,7 @@ function Router() {
         <Route path="/marketplace" component={Marketplace} />
       <Route path={"/inscription-installateur"} component={InstallerSignup} />
       <Route path={"/login-installateur"} component={LoginInstallateur} />
+      <Route path={"/payment/:leadId"} component={PaymentPage} />
       <Route path={"/app"} component={Home} />
       <Route path={"/permissions"} component={Permissions} />
       <Route path={"/permissions/activity"} component={ActivityLog} />

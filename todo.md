@@ -1288,14 +1288,19 @@
 - [ ] Timer 48h avec libération automatique si non payé
 
 #### 3. Intégration paiement Stripe (6%)
-- [ ] Configuration Stripe (clés API)
-- [ ] API createPaymentIntent (montant commission)
-- [ ] Page paiement (/payment/:reservationId)
-- [ ] Webhook Stripe (confirmation paiement)
-- [ ] Mise à jour statut lead → "sold" après paiement
-- [ ] Création commission record (montant, date)
-- [ ] Envoi coordonnées client à installateur (email)
-- [ ] Notification client (email "Installateur confirmé")
+- [x] Installation SDK Stripe (backend + frontend)
+- [x] API createPaymentIntent (montant commission)
+- [x] API confirmPayment (vérification paiement Stripe)
+- [x] API getPurchasedLead (coordonnées client)
+- [x] Page paiement (/payment/:leadId) avec Stripe Elements
+- [x] Bouton "Acheter ce lead" dans marketplace (si réservé)
+- [x] Mise à jour statut lead → "paid" après paiement
+- [x] Création commission record (montant, date, paymentIntentId)
+- [x] Stats provider (leadsConverted, totalSpent)
+- [ ] Configuration clés Stripe (STRIPE_SECRET_KEY, VITE_STRIPE_PUBLIC_KEY) - à faire par utilisateur
+- [ ] Webhook Stripe (sécurité supplémentaire) - optionnel
+- [ ] Envoi coordonnées client à installateur (email) - à faire
+- [ ] Notification client (email "Installateur confirmé") - à faire
 
 #### 4. Dashboard installateurs
 - [ ] Page dashboard installateurs (/dashboard-installateur)
