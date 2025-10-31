@@ -1303,13 +1303,18 @@
 - [ ] Notification client (email "Installateur confirmé") - à faire
 
 #### 4. Dashboard installateurs
-- [ ] Page dashboard installateurs (/dashboard-installateur)
-- [ ] Liste leads réservés (en attente paiement)
-- [ ] Liste leads achetés (coordonnées clients visibles)
-- [ ] Historique achats (statistiques)
-- [ ] Solde commissions payées
-- [ ] Bouton "Payer maintenant" (leads réservés)
-- [ ] Bouton "Contacter client" (leads achetés)
+- [x] Page dashboard installateurs (/dashboard-installateur)
+- [x] Stats clés (leads réservés, achetés, CA total)
+- [x] Liste leads réservés (en attente paiement)
+- [x] Liste leads achetés (coordonnées clients visibles)
+- [x] Affichage coordonnées complètes (nom, tél, email, adresse)
+- [x] Bouton "Acheter maintenant" (leads réservés)
+- [x] Boutons "Appeler" et "Email" (leads achetés)
+- [x] Timer expiration réservation (heures restantes)
+- [x] Alerte si expiration < 6h
+- [x] API getProviderReservedLeads (backend)
+- [x] API getProviderPurchasedLeads (backend)
+- [x] Bouton Dashboard dans marketplace
 
 #### 5. Emails automatiques
 - [ ] Email confirmation lead créé (client)

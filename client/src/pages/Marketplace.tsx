@@ -104,12 +104,20 @@ export default function Marketplace() {
               <div className="text-sm text-gray-500">{providerInfo?.email}</div>
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-          >
-            🚪 Déconnexion
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLocation('/dashboard-installateur')}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            >
+              📊 Dashboard
+            </button>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              🚪 Déconnexion
+            </button>
+          </div>
         </div>
 
         {/* Header */}

@@ -608,5 +608,43 @@ export const leadsRouter = router({
         .limit(input.limit)
         .offset(input.offset);
     }),
+  
+  /**
+   * Récupérer les leads réservés par le provider connecté
+   */
+  getProviderReservedLeads: providerProcedure.query(async ({ ctx }) => {
+    const db = await getDb();
+    if (!db) throw new Error('Database not available');
+    
+    const providerId = ctx.provider.id;
+    
+    return await db
+      .select()
+      .from(leads)
+      .where(and(
+        eq(leads.reservedBy, providerId),
+        eq(leads.status, 'reserved')
+      ))
+      .orderBy(desc(leads.reservedAt));
+  }),
+  
+  /**
+   * Récupérer les leads achetés par le provider connecté
+   */
+  getProviderPurchasedLeads: providerProcedure.query(async ({ ctx }) => {
+    const db = await getDb();
+    if (!db) throw new Error('Database not available');
+    
+    const providerId = ctx.provider.id;
+    
+    return await db
+      .select()
+      .from(leads)
+      .where(and(
+        eq(leads.convertedBy, providerId),
+        eq(leads.status, 'paid')
+      ))
+      .orderBy(desc(leads.convertedAt));
+  }),
 });
 
