@@ -78,6 +78,13 @@
       "when": 1761835103830,
       "tag": "0010_parched_black_panther",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1761902748176,
+      "tag": "0011_short_blindfold",
+      "breakpoints": true
     }
   ]
 }

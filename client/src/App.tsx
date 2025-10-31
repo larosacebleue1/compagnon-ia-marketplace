@@ -11,8 +11,10 @@ import PermissionDetail from "./pages/PermissionDetail";
 import ActivityLog from "./pages/ActivityLog";
 import ProfileSelection from "./pages/ProfileSelection";
 import CalculatorPublic from "./pages/CalculatorPublic";
-import LeadDashboard from "./pages/LeadDashboard";
+import LeadDashboard from './pages/LeadDashboard';
+import Marketplace from './pages/Marketplace';
 import InstallerSignup from "./pages/InstallerSignup";
+import LoginInstallateur from "./pages/LoginInstallateur";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -21,8 +23,10 @@ function Router() {
       <Route path={"/"} component={Landing} />
       <Route path={"/profile-selection"} component={ProfileSelection} />
       <Route path={"/calculateur"} component={CalculatorPublic} />
-      <Route path={"/dashboard/:token"} component={LeadDashboard} />
+        <Route path="/dashboard/:token" component={LeadDashboard} />
+        <Route path="/marketplace" component={Marketplace} />
       <Route path={"/inscription-installateur"} component={InstallerSignup} />
+      <Route path={"/login-installateur"} component={LoginInstallateur} />
       <Route path={"/app"} component={Home} />
       <Route path={"/permissions"} component={Permissions} />
       <Route path={"/permissions/activity"} component={ActivityLog} />

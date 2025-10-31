@@ -81,6 +81,7 @@ export default function InstallerSignup() {
         contactName: formData.get('contactName') as string,
         contactEmail: formData.get('contactEmail') as string,
         contactPhone: formData.get('contactPhone') as string,
+        password: formData.get('password') as string,
         
         // Adresse
         address: formData.get('address') as string,
@@ -352,6 +353,21 @@ export default function InstallerSignup() {
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
                   placeholder="06 12 34 56 78"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Mot de passe * <span className="text-red-500">●</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  minLength={8}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                  placeholder="Minimum 8 caractères"
+                />
+                <p className="text-xs text-gray-500 mt-1">Pour accéder à la marketplace ORIASOL</p>
               </div>
             </div>
           </div>

@@ -1,0 +1,1 @@
+ALTER TABLE `providers` ADD `password_hash` varchar(255) NOT NULL;

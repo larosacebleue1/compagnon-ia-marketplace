@@ -15,12 +15,14 @@ import { SYSTEM_PROMPTS } from "./ai/config";
 import { userRouter } from "./api/user";
 import { pvgisRouter } from "./api/pvgis";
 import { leadsRouter } from "./api/leads";
+import { providersAuthRouter } from "./api/providers-auth";
 
 export const appRouter = router({
   system: systemRouter,
   user: userRouter,
   pvgis: pvgisRouter,
   leads: leadsRouter,
+  providersAuth: providersAuthRouter,
 
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

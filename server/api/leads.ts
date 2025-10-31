@@ -6,7 +6,9 @@
  */
 
 import { router, publicProcedure, protectedProcedure } from '../_core/trpc';
+import { providerProcedure } from '../_core/providerAuth';
 import { z } from 'zod';
+import bcrypt from 'bcrypt';
 import { getDb } from '../db';
 import { services, providers, leads, leadReservations, commissions, leadHistory } from '../../drizzle/schema';
 import { eq, and, sql, desc, inArray } from 'drizzle-orm';
@@ -253,13 +255,16 @@ export const leadsRouter = router({
   /**
    * Réserver un lead (48h exclusivité)
    */
-  reserveLead: protectedProcedure
+  reserveLead: providerProcedure
     .input(z.object({
       leadId: z.number(),
     }))
     .mutation(async ({ input, ctx }) => {
       const db = await getDb();
       if (!db) throw new Error('Database not available');
+      
+      // Récupérer le providerId depuis le contexte (injecté par providerProcedure)
+      const providerId = ctx.provider.id;
       
       // Vérifier que le lead est disponible
       const [lead] = await db
@@ -276,17 +281,6 @@ export const leadsRouter = router({
         throw new Error('Lead non disponible');
       }
       
-      // Récupérer le provider lié à l'utilisateur
-      const [provider] = await db
-        .select()
-        .from(providers)
-        .where(eq(providers.userId, ctx.user.id))
-        .limit(1);
-      
-      if (!provider) {
-        throw new Error('Profil prestataire non trouvé');
-      }
-      
       // Récupérer le service pour la durée de réservation
       const [service] = await db
         .select()
@@ -301,7 +295,7 @@ export const leadsRouter = router({
       // Créer la réservation
       await db.insert(leadReservations).values({
         leadId: input.leadId,
-        providerId: provider.id,
+        providerId: providerId,
         expiresAt,
         isActive: true,
       });
@@ -310,7 +304,7 @@ export const leadsRouter = router({
       await db.update(leads)
         .set({
           status: 'reserved',
-          reservedBy: provider.id,
+          reservedBy: providerId,
           reservedAt: new Date(),
           reservedUntil: expiresAt,
         })
@@ -321,16 +315,15 @@ export const leadsRouter = router({
         leadId: input.leadId,
         fromStatus: 'available',
         toStatus: 'reserved',
-        changedBy: ctx.user.id,
+        changedBy: providerId,
         reason: 'Réservé par prestataire',
       });
-      
-      // Mettre à jour stats prestataire
+            // Mettre à jour stats prestataire
       await db.update(providers)
         .set({
           leadsReceived: sql`${providers.leadsReceived} + 1`,
         })
-        .where(eq(providers.id, provider.id));
+        .where(eq(providers.id, providerId));
       
       return { success: true, expiresAt };
     }),
@@ -489,6 +482,7 @@ export const leadsRouter = router({
       contactName: z.string(),
       contactEmail: z.string().email(),
       contactPhone: z.string(),
+      password: z.string().min(8),
       // Adresse
       address: z.string(),
       city: z.string(),
@@ -546,6 +540,8 @@ export const leadsRouter = router({
           contactName: input.contactName,
           contactEmail: input.contactEmail,
           contactPhone: input.contactPhone,
+          // Authentification
+          passwordHash: await bcrypt.hash(input.password, 10),
           // Adresse
           address: input.address,
           city: input.city,

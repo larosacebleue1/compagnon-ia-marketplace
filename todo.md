@@ -1246,3 +1246,106 @@
 - [ ] Solde à payer
 - [ ] Factures téléchargeables
 
+
+
+
+---
+
+## 🏪 MARKETPLACE ORIASOL - Service Mise en Relation Universel (EN COURS)
+
+### Architecture complète ✅
+- [x] Base de données (6 tables : services, providers, leads, leadReservations, commissions, leadHistory)
+- [x] API CRUD complète (8 endpoints leads)
+- [x] Seed data (5 services initiaux)
+- [x] Module Photovoltaïque (calculateur 20 zones + ROI + prix ajustables)
+- [x] Système 2 parcours (Standard 14j / Express immédiat)
+- [x] Dashboard client (suivi temps réel)
+- [x] Inscription installateurs (exigences qualité strictes)
+- [x] Page marketplace (/marketplace) - UI créée
+
+### Fonctionnalités à finaliser (AUJOURD'HUI)
+
+#### 1. Système d'authentification installateurs
+- [x] API login installateurs (POST /api/providers/login)
+- [x] API vérification token (GET /api/providers/me)
+- [x] Middleware requireProvider (vérification auth)
+- [x] Page login installateurs (/login-installateur)
+- [x] Gestion session (localStorage token JWT)
+- [x] Champ password ajouté dans inscription
+- [x] Hash bcrypt passwords
+- [x] Protection routes marketplace (auth required)
+- [x] Middleware providerProcedure (architecture professionnelle)
+- [x] Header Authorization Bearer token automatique
+- [x] Gestion erreurs auth (token expiré, invalide, provider inactif)
+
+#### 2. Système de réservation leads (48h)
+- [ ] API reserveLead avec ctx.user.id (POST /api/leads/:id/reserve)
+- [ ] Vérification provider actif (statut "active")
+- [ ] Vérification lead disponible (statut "available")
+- [ ] Création reservation (48h expiration)
+- [ ] Mise à jour statut lead → "reserved"
+- [ ] Notification client (email "Installateur assigné")
+- [ ] Timer 48h avec libération automatique si non payé
+
+#### 3. Intégration paiement Stripe (6%)
+- [ ] Configuration Stripe (clés API)
+- [ ] API createPaymentIntent (montant commission)
+- [ ] Page paiement (/payment/:reservationId)
+- [ ] Webhook Stripe (confirmation paiement)
+- [ ] Mise à jour statut lead → "sold" après paiement
+- [ ] Création commission record (montant, date)
+- [ ] Envoi coordonnées client à installateur (email)
+- [ ] Notification client (email "Installateur confirmé")
+
+#### 4. Dashboard installateurs
+- [ ] Page dashboard installateurs (/dashboard-installateur)
+- [ ] Liste leads réservés (en attente paiement)
+- [ ] Liste leads achetés (coordonnées clients visibles)
+- [ ] Historique achats (statistiques)
+- [ ] Solde commissions payées
+- [ ] Bouton "Payer maintenant" (leads réservés)
+- [ ] Bouton "Contacter client" (leads achetés)
+
+#### 5. Emails automatiques
+- [ ] Email confirmation lead créé (client)
+- [ ] Email installateur assigné (client)
+- [ ] Email lead réservé (installateur)
+- [ ] Email coordonnées client (installateur après paiement)
+- [ ] Email paiement confirmé (installateur)
+- [ ] Email rappel paiement 24h avant expiration (installateur)
+- [ ] Email réservation expirée (installateur)
+
+#### 6. Admin dashboard (validation manuelle)
+- [ ] Page admin providers (/admin/providers)
+- [ ] Liste providers pending (en attente validation)
+- [ ] Détails provider (infos complètes + documents)
+- [ ] Boutons actions (Approuver / Rejeter / Demander documents)
+- [ ] Email validation approuvée (provider)
+- [ ] Email validation rejetée avec raison (provider)
+- [ ] Email documents manquants (provider)
+
+#### 7. Tests complets
+- [ ] Test parcours client complet (calculateur → lead → dashboard)
+- [ ] Test inscription installateur (formulaire → validation)
+- [ ] Test marketplace (login → réservation → paiement → coordonnées)
+- [ ] Test expiration 48h (libération automatique)
+- [ ] Test emails (tous templates)
+- [ ] Test admin (validation providers)
+
+### Stratégie multi-domaines (DEMAIN - Déploiement)
+- [ ] Configuration Vercel + PlanetScale
+- [ ] Domaine MA-MAISON-AUTONOME.fr (interface client B2C)
+- [ ] Domaine ORIASOL.fr (marketplace installateurs B2B)
+- [ ] Séparation complète interfaces (confidentialité business)
+- [ ] Tests production multi-domaines
+- [ ] Documentation installateurs
+
+### Projection revenus (Modèle 6%)
+- Mois 1 : 10 leads PV × 690€ = 6,900€
+- Mois 3 : 50 leads PV × 690€ = 34,500€
+- Mois 6 : 100 leads PV × 690€ = 69,000€
+- An 1 : 200 leads/mois × 690€ = 138,000€/mois
+
+**Économie installateurs : 1,035€ par lead (6% vs 15% marché)**
+
+

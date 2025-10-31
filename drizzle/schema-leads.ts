@@ -114,6 +114,9 @@ export const providers = mysqlTable('providers', {
   contactEmail: varchar('contact_email', { length: 320 }).notNull(),
   contactPhone: varchar('contact_phone', { length: 20 }).notNull(),
   
+  // Authentification
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  
   // Adresse
   address: text('address'),
   city: varchar('city', { length: 255 }),
