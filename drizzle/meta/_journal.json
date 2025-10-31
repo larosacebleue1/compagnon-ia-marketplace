@@ -85,6 +85,13 @@
       "when": 1761902748176,
       "tag": "0011_short_blindfold",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1761907691935,
+      "tag": "0012_bright_hannibal_king",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,1 @@
+ALTER TABLE `providers` MODIFY COLUMN `user_id` int;

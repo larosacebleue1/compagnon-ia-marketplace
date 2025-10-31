@@ -94,8 +94,8 @@ export type InsertService = typeof services.$inferInsert;
 export const providers = mysqlTable('providers', {
   id: int('id').autoincrement().primaryKey(),
   
-  // Compte utilisateur lié
-  userId: int('user_id').notNull().unique(),
+  // Compte utilisateur lié (optionnel - système auth séparé)
+  userId: int('user_id').unique(),
   
   // Informations entreprise
   companyName: varchar('company_name', { length: 255 }).notNull(),
