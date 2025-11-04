@@ -5,10 +5,12 @@
     "buildCommand": "pnpm install --frozen-lockfile && pnpm build && pnpm build:server"
   },
   "deploy": {
-    "startCommand": "startCommand":"pnpm démarrer",
-
+    "startCommand": "NODE_ENV=production node dist-server/index.js",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
+  }
+}
+
   }
 }
 
