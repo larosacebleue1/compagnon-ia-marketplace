@@ -5,7 +5,8 @@
     "buildCommand": "pnpm install --frozen-lockfile && pnpm build && pnpm build:server"
   },
   "deploy": {
-    "startCommand": "pnpm start",
+    "startCommand": "startCommand":"pnpm démarrer",
+
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
