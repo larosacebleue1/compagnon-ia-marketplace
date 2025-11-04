@@ -1,0 +1,62 @@
+name: oriasol-marketplace
+region: lon
+
+services:
+  - name: web
+    github:
+      repo: larosacebleue1/compagnon-ia-marketplace
+      branch: master
+      deploy_on_push: true
+    
+    build_command: pnpm install && pnpm run build
+    run_command: pnpm start
+    
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    
+    http_port: 8080
+    
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: STRIPE_SECRET_KEY
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: VITE_STRIPE_PUBLIC_KEY
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: JWT_SECRET
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: NODE_ENV
+        value: production
+        scope: RUN_AND_BUILD_TIME
+      - key: PORT
+        value: "8080"
+        scope: RUN_AND_BUILD_TIME
+      - key: URL_SERVEUR_OAUT
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: URL_DU_PORTAIL_VITE_OAUTH
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: IDENTIFIANT_OUVERT_PROPRIÉTAIRE
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: NOM_DU_PROPRIÉTAIRE
+        value: LaRosacebleue
+        scope: RUN_AND_BUILD_TIME
+    
+    health_check:
+      http_path: /
+      initial_delay_seconds: 60
+      period_seconds: 10
+      timeout_seconds: 5
+      success_threshold: 1
+      failure_threshold: 3
+    
+    routes:
+      - path: /
+
