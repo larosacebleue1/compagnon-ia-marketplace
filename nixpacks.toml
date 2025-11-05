@@ -5,7 +5,8 @@ nixPkgs = ["nodejs", "pnpm"]
 cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
-cmds = ["pnpm build", "pnpm build:server"]
+cmds = ["pnpm run build", "pnpm run build:server"]
 
 [start]
-cmd = "NODE_ENV=production node dist-server/index.js"
+cmd = "node dist-server/index.js"
+
