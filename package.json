@@ -8,9 +8,9 @@
     "build": "vite build",
     "build:server": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist-server",
 "start": "NODE_ENV=production node dist-server/index.js",
-    "check": "tsc --noEmit",
-    "start": "NODE_ENV=production node dist-server/index.js",
-
+"check": "tsc --noEmit",
+"format": "prettier --write .",
+"test": "vitest run",",
     "format": "prettier --write .",
     "test": "vitest run",
     "db:push": "drizzle-kit generate && drizzle-kit migrate"
